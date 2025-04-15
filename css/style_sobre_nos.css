@@ -1,0 +1,149 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  
+  body {
+    font-family: sans-serif;
+    background-color: #f6f0e6;
+    color: #333;
+
+  }
+main {
+    width: 90%;
+    margin: 0 auto;
+    padding: 20px;
+    margin-top: 60px;
+}
+  .topbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #4c3928;
+    padding: 10px 20px;
+  }
+  
+  .logo {
+    flex: 1;
+  }
+  
+  .menu {
+    flex: 9;
+    display: flex;
+    list-style: none;
+    
+  }
+  
+  .menu-item {
+    color: #fff;
+    text-decoration: none;
+    margin-right: 3rem;
+  }
+  .menu-item:hover {
+    color: #DAB88B;
+  }
+
+  h1 {
+    font-size: 2.5rem;
+    color: #5D4E3C;
+    text-align: center;
+    text-transform: uppercase;
+    margin-bottom: 50px;
+  }
+  .sobre-bloco{
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    margin-bottom: 50px;
+    background-color: #ffffff8a;
+    height: 30rem;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    
+  }
+  .sobre-bloco:hover {
+    transform: scale(1.05);
+    transition: transform 0.3s;
+  }
+  .sobre-bloco img{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .sobre-bloco p{
+    width: 50%;
+    padding: 20px;
+    font-size: 1.2rem;
+    line-height: 1.5;
+    color: #333;
+    text-align: justify;
+  }
+
+  #sobre-nos{
+    width: 80%;
+    margin: auto;
+  }
+  @media (max-width: 1024px) {
+    .sobre-bloco {
+      flex-direction: column;
+      height: auto;
+      padding: 20px;
+    }
+    .sobre-bloco img {
+      width: 60%;
+      height: auto;
+      margin: 30px 0;
+
+    }
+    .sobre-bloco p {
+    
+    width: 100%;
+    }
+  }
+  @media (max-width: 600px){
+    body{
+        min-width: 400px;
+      }
+      .topbar {
+        display: flex;
+        flex-direction: row;
+        
+      }
+      .menu {
+        flex-direction: column;
+        align-items: center;
+        margin: 10px 0 ;
+      }
+      .menu-item {
+        margin-right: 0;
+        font-size: 1.2rem;
+  
+      }
+    h1 {
+      font-size: 2rem;
+    }
+    .sobre-bloco p{
+      font-size: 1rem;
+    }
+  }
+
+  footer {
+    background-color: #4c3928;
+    height: 5rem;
+    color: #eee;
+    font-size: 0.75rem;
+    text-align: center;
+    padding: 15px 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  footer p{
+    font-size: 0.9rem;
+  }
+  footer a {
+    color: #fff;
+    text-decoration: none;
+    font-weight: bold;
+  }
