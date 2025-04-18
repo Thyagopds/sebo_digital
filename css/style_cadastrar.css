@@ -1,0 +1,186 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: sans-serif;
+    background-color: #f6f0e6;
+    color: #333;
+}
+
+main {
+    width: 90%;
+    margin: 0 auto;
+    padding: 20px;
+    margin-top: 60px;
+}
+
+.topbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #4c3928;
+    padding: 10px 20px;
+}
+
+.logo {
+    flex: 1;
+}
+
+.menu {
+    flex: 9;
+    display: flex;
+    list-style: none;
+}
+
+.menu-item {
+    color: #fff;
+    text-decoration: none;
+    margin-right: 3rem;
+}
+
+.menu-item:hover {
+    color: #DAB88B;
+}
+
+.cadastrar {
+    text-align: center;
+    padding: 40px 20px;
+    margin-top: 40px;
+}
+
+.cadastrar h1 {
+    font-size: 2.5rem;
+    color: #5D4E3C;
+    text-align: center;
+    text-transform: uppercase;
+    margin-bottom: 50px;
+}
+
+.cadastrar-box {
+    width: 40%;
+    margin: 40px auto;
+    padding: 40px;
+    background-color: white;
+    border-radius: 15px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+}
+
+.cadastrar-box p {
+    font-size: 1.2rem;
+    color: #555;
+    margin-bottom: 30px;
+}
+
+.cadastrar-box form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.cadastrar-box input,
+.cadastrar-box select,
+.cadastrar-box textarea {
+    width: 100%;
+    height: 56px;
+    font-size: 1rem;
+    padding: 10px;
+    border: 1px solid #aaa;
+    border-radius: 6px;
+}
+
+.cadastrar-box textarea {
+    height: auto;
+}
+
+.cadastrar-box input:hover,
+.cadastrar-box select:hover,
+.cadastrar-box textarea:hover {
+    border: 1px solid #9c5120;
+}
+
+.cadastrar-box input:focus,
+.cadastrar-box select:focus,
+.cadastrar-box textarea:focus {
+    border: 3px solid #9c5120;
+    outline: none;
+}
+
+.cadastrar-box button {
+    padding: 10px;
+    border: none;
+    height: 50px;
+    background-color: #9c5120;
+    color: white;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background 0.3s;
+    font-size: 1rem;
+    font-weight: bold;
+    margin-top: 10px;
+}
+
+.cadastrar-box button:hover {
+    background-color: #7e3f17;
+}
+
+footer {
+    background-color: #4c3928;
+    height: 5rem;
+    color: #eee;
+    font-size: 0.9rem;
+    text-align: center;
+    padding: 15px 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+footer a {
+    color: #fff;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+@media (max-width: 1024px) {
+    .cadastrar-box {
+        width: 90%;
+    }
+}
+
+@media (max-width: 600px) {
+    body {
+        min-width: 400px;
+    }
+
+    .topbar {
+        display: flex;
+        flex-direction: row;
+    }
+
+    .menu {
+        flex-direction: column;
+        align-items: center;
+        margin: 10px 0;
+    }
+
+    .menu-item {
+        margin-right: 0;
+        font-size: 1.2rem;
+    }
+
+    .cadastrar h1 {
+        font-size: 2rem;
+    }
+
+    .cadastrar-box {
+        width: 100%;
+        padding: 20px;
+    }
+
+    .cadastrar-box p {
+        font-size: 1rem;
+    }
+}
