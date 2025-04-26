@@ -144,6 +144,12 @@ footer a {
     font-weight: bold;
 }
 
+.cadastrar-box .input-group label {
+    text-align: left;
+    display: block;
+    padding-bottom: 10px;
+  }
+
 @media (max-width: 1024px) {
     .cadastrar-box {
         width: 90%;
