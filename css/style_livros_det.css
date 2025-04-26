@@ -1,0 +1,122 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: sans-serif;
+    background-color: #f6f0e6;
+    color: #333;
+}
+
+.topbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #4c3928;
+    padding: 10px 20px;
+}
+
+.logo {
+    flex: 1;
+}
+
+.menu {
+    flex: 9;
+    display: flex;
+    list-style: none;
+}
+
+.menu-item {
+    color: #fff;
+    text-decoration: none;
+    margin-right: 3rem;
+}
+
+.menu-item:hover {
+    color: #DAB88B;
+}
+
+h1 {
+    font-size: 2rem;
+    color: #5D4E3C;
+    text-align: center;
+    text-transform: uppercase;
+    margin-bottom: 0px;
+    margin-top: 20px;
+}
+
+.detalhes-livro {
+    display: flex;
+    justify-content: center;
+    margin-top: 10px;
+    padding: 10px;
+}
+
+.livro-info {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 40px;
+    max-width: 1000px;
+    margin: 20px auto;
+}
+
+.livro-info img {
+    width: 220px;
+    height: auto;
+    max-height: 300px;
+    border-radius: 5px;
+}
+
+.info {
+    max-width: 600px;
+}
+
+
+.info p {
+    font-size: 1.2rem;
+    color: #666;
+    margin-bottom: 15px;
+}
+
+.comprar-btn {
+    padding: 10px;
+    border: none;
+    height: 50px;
+    background-color: #9c5120;
+    color: white;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background 0.3s;
+    font-size: 1rem;
+    font-weight: bold;
+    margin-top: 10px;
+}
+
+.comprar-btn:hover {
+    background-color: #7a3e17;
+}
+
+footer {
+    background-color: #4c3928;
+    height: 5rem;
+    color: #eee;
+    font-size: 0.75rem;
+    text-align: center;
+    padding: 15px 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+footer p {
+    font-size: 0.9rem;
+}
+
+footer a {
+    color: #fff;
+    text-decoration: none;
+    font-weight: bold;
+}

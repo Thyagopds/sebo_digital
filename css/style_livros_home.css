@@ -1,94 +1,100 @@
 * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-  }
-  
-  body {
-    font-family: sans-serif;
-    background-color: #f6f0e6;
-    color: #333;
-
-  }
-main {
-    width: 90%;
-    margin: 0 auto;
-    padding: 20px;
-    margin-top: 60px;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
-  .topbar {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    background-color: #4c3928;
-    padding: 10px 20px;
-  }
-  
-  .logo {
-    flex: 1;
-  }
-  
-  .menu {
-    flex: 9;
-    display: flex;
-    list-style: none;
-    
-  }
-  
-  .menu-item {
-    color: #fff;
-    text-decoration: none;
-    margin-right: 3rem;
-  }
-  .menu-item:hover {
-    color: #DAB88B;
-  }
 
-  h1 {
-    font-size: 2.5rem;
-    color: #5D4E3C;
-    text-align: center;
-    text-transform: uppercase;
-    margin-bottom: 50px;
-  }
-  .livros-disponiveis {
-    text-align: center;
-    margin-top: 40px;
+body {
+  font-family: sans-serif;
+  background-color: #f6f0e6;
+  color: #333;
+}
+
+main {
+  width: 90%;
+  margin: 0 auto;
+  padding: 20px;
+  margin-top: 60px;
+}
+
+.topbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #4c3928;
+  padding: 10px 20px;
+}
+
+.logo {
+  flex: 1;
+}
+
+.menu {
+  flex: 9;
+  display: flex;
+  list-style: none;
+
+}
+
+.menu-item {
+  color: #fff;
+  text-decoration: none;
+  margin-right: 3rem;
+}
+
+.menu-item:hover {
+  color: #DAB88B;
+}
+
+h1 {
+  font-size: 2.5rem;
+  color: #5D4E3C;
+  text-align: center;
+  text-transform: uppercase;
+  margin-bottom: 50px;
+}
+
+.livros-disponiveis {
+  text-align: center;
+  margin-top: 40px;
 }
 
 .livros-disponiveis h2 {
-    font-size: 2rem;
-    color: #5D4E3C;
-    margin-bottom: 20px;
+  font-size: 2rem;
+  color: #5D4E3C;
+  margin-bottom: 20px;
 }
 
 .livros-disponiveis p {
-    font-size: 1.2rem;
-    color: #666;
-    margin-bottom: 30px;
+  font-size: 1.2rem;
+  color: #666;
+  margin-bottom: 30px;
 }
 
 .cards-livros {
-    display: flex;
-    justify-content: space-around;
-    gap: 20px; 
-    flex-wrap: wrap;
+  display: flex;
+  justify-content: space-around;
+  gap: 20px;
+  flex-wrap: wrap;
 }
 
 .card {
-    background-color: #fff;
-    width: 250px;
-    padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-    text-align: center;
-    transition: transform 0.3s ease-in-out;
-    text-decoration: none;
-    color: inherit;
+  background-color: #fff;
+  width: 250px;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  transition: transform 0.3s ease-in-out;
+  text-decoration: none;
+  color: inherit;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 }
 
 .card:hover {
-    transform: scale(1.05);
+  transform: scale(1.05);
 }
 
 .preco {
@@ -99,34 +105,34 @@ main {
 }
 
 .card img {
-    width: 100%; 
-    height: auto;
-    max-height: 300px; 
-    border-radius: 5px;
+  width: 100%;
+  height: auto;
+  max-height: 300px;
+  border-radius: 5px;
 }
 
 .card h3 {
-    font-size: 1.5rem;
-    color: #5D4E3C;
-    margin-top: 15px;
+  font-size: 1.5rem;
+  color: #5D4E3C;
+  margin-top: 15px;
 }
 
 .card p {
-    font-size: 1rem;
-    color: #666;
-    margin-top: 10px;
+  font-size: 1rem;
+  color: #666;
+  margin-top: 10px;
 }
 
 @media (max-width: 768px) {
-    .cards-livros {
-        flex-direction: column;
-        align-items: center;
-    }
+  .cards-livros {
+    flex-direction: column;
+    align-items: center;
+  }
 
-    .card {
-        width: 80%; 
-        margin-bottom: 20px;
-    }
+  .card {
+    width: 80%;
+    margin-bottom: 20px;
+  }
 }
 
 footer {
@@ -140,9 +146,11 @@ footer {
   justify-content: space-between;
   align-items: center;
 }
-footer p{
+
+footer p {
   font-size: 0.9rem;
 }
+
 footer a {
   color: #fff;
   text-decoration: none;
