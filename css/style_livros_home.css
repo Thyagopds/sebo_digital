@@ -68,11 +68,10 @@ main {
     margin-bottom: 30px;
 }
 
-/* Estilo para os cards de livros */
 .cards-livros {
     display: flex;
     justify-content: space-around;
-    gap: 20px; /* Adicionando espaço entre os livros */
+    gap: 20px; 
     flex-wrap: wrap;
 }
 
@@ -89,7 +88,7 @@ main {
 }
 
 .card:hover {
-    transform: scale(1.05); /* Efeito de zoom */
+    transform: scale(1.05);
 }
 
 .preco {
@@ -100,9 +99,9 @@ main {
 }
 
 .card img {
-    width: 100%; /* Ajustando a imagem para ocupar toda a largura do card */
+    width: 100%; 
     height: auto;
-    max-height: 300px; /* Definindo um limite de altura para as imagens */
+    max-height: 300px; 
     border-radius: 5px;
 }
 
@@ -118,7 +117,6 @@ main {
     margin-top: 10px;
 }
 
-/* Responsividade */
 @media (max-width: 768px) {
     .cards-livros {
         flex-direction: column;
@@ -126,7 +124,7 @@ main {
     }
 
     .card {
-        width: 80%; /* Ajustando a largura para dispositivos menores */
+        width: 80%; 
         margin-bottom: 20px;
     }
 }
@@ -149,4 +147,5 @@ footer a {
   color: #fff;
   text-decoration: none;
   font-weight: bold;
+
 }
