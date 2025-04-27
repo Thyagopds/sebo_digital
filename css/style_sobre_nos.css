@@ -56,10 +56,10 @@ main {
     justify-content: space-evenly;
     align-items: center;
     margin-bottom: 50px;
-    background-color: #ffffff8a;
+    /* background-color: #fcf8ef; */
     height: 30rem;
     border-radius: 10px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    /* box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); */
     
   }
   .sobre-bloco:hover {
