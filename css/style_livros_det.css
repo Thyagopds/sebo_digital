@@ -96,7 +96,7 @@ h1 {
     color: white;
     border-radius: 6px;
     cursor: pointer;
-    transition: background 0.3s;
+    transition: background 0.3s; 
     font-size: 1rem;
     font-weight: bold;
     margin-top: 10px;
@@ -127,4 +127,32 @@ footer a {
     color: #fff;
     text-decoration: none;
     font-weight: bold;
+}
+.detalhes-dono {
+    margin-top: 30px;
+    text-align: center;
+}
+
+.detalhes-dono table {
+    width: 80%;
+    margin: 0 auto;
+    border-collapse: collapse;
+    background-color: #fff;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.detalhes-dono th, .detalhes-dono td {
+    border: 1px solid #ddd;
+    padding: 10px;
+    text-align: left;
+}
+
+.detalhes-dono th {
+    background-color: #4c3928;
+    color: #fff;
+    font-weight: bold;
+}
+
+.detalhes-dono td {
+    color: #333;
 }
