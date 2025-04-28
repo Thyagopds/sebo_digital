@@ -134,7 +134,26 @@ h1 {
     margin-bottom: 20px;
   }
 }
+@media (max-width: 600px){
+  body{
+    min-width: 400px;
+  }
+  .topbar {
+    display: flex;
+    flex-direction: row;
+    
+  }
+  .menu {
+    flex-direction: column;
+    align-items: center;
+    margin: 10px 0 ;
+  }
+  .menu-item {
+    margin-right: 0;
+    font-size: 1.2rem;
 
+  }
+}
 footer {
   background-color: #4c3928;
   height: 5rem;
