@@ -1,3 +1,4 @@
+@import "bootstrap-icons/font/bootstrap-icons.css";
 * {
     margin: 0;
     padding: 0;
@@ -13,36 +14,49 @@
 main {
     width: 90%;
     margin: 0 auto;
-    padding: 20px;
+    padding: 80px 20px 20px 20px;
     margin-top: 60px;
 }
-  .topbar {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    background-color: #4c3928;
-    padding: 10px 20px;
-  }
+
+.barra-navegacao {
+  background-color: #4c3928 !important;
+  color: white !important;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+}
+
+.barra-navegacao .navbar-brand img {
+  height: 40px;
+  margin: 0.5rem 2rem 0.5rem 1rem;
+}
+
+.barra-navegacao .nav-link {
+  color: white !important;
+  margin-right: 1rem;
+  transition: color 0.3s ease;
+}
+
+.barra-navegacao .nav-link:hover {
+  color: #cfcfcf !important;
+  text-decoration: underline;
+}
+
+.barra-navegacao .bt-login {
+  width: 8rem;
+  transition: background-color 0.3s ease, color 0.3s ease;
+  margin-right: 2rem;
+}
+.barra-navegacao .bt-login:hover{
+ background-color: #7c5f45;
   
-  .logo {
-    flex: 1;
-  }
-  
-  .menu {
-    flex: 9;
-    display: flex;
-    list-style: none;
-    
-  }
-  
-  .menu-item {
-    color: #fff;
-    text-decoration: none;
-    margin-right: 3rem;
-  }
-  .menu-item:hover {
-    color: #DAB88B;
-  }
+}
+
+.navbar-toggler {
+  border: none;
+}
+
+.navbar-toggler-icon {
+  filter: invert(1);
+}
   
   .intro {
     display: flex;
@@ -58,13 +72,21 @@ main {
   }
   .text h1 {
     font-size: 2rem;
+    font-weight: bold;
   }
   .buttons {
     margin-top: 10px;
     display: flex;
     gap: 15px;
   }
-  
+  .link-login{
+    text-decoration: none;
+    
+  }
+  .link-login button{
+    color: white;
+    background-color: #77502e;
+  }
   .btn {
     background-color: #DAB88B;
     width: 30%;
@@ -80,9 +102,13 @@ main {
     font-weight: bold;
     font-size: 16px;
     color: white;
+    text-decoration: none;
+    
   }
+
   .btn:hover {
     background-color: #5D4E3C;
+    color: white;
   }
   
   .about {
@@ -95,6 +121,7 @@ main {
     color: #9c5120;
     margin-bottom: 30px;
     font-size: 40px;
+    font-weight: bold;
   }
   
   .about p {
@@ -121,10 +148,10 @@ main {
     padding: 30px;
     text-align: center;
 
-    /* display: flex;
+    display: flex;
     align-items: center;
     flex-direction: column;
-    justify-content: center; */
+    justify-content: center;
   }
   .card:hover {
     transform: scale(1.05);
@@ -156,11 +183,12 @@ main {
   .contact h2 {
     color: #9c5120;
     font-size: 40px;
+    font-weight: bold;
   }
   
   .contact-box {
     width: 40%;
-    height: 36rem;
+    
     margin: 40px auto;
     padding: 40px;
     background-color: white;
@@ -193,10 +221,14 @@ main {
     border: 1px solid #9c5120;
   }
   .contact-box input:focus, .contact-box textarea:focus {
-    border: 3px solid #9c5120;
-    outline: none;
+  outline: none;
+  box-shadow: 0 0 0 0.25rem rgba(156, 81, 32, 0.25);
+  border-color: #9c5120;
   }
-
+  .btn a {
+    text-decoration: none;
+    color: white;
+  }
   .contact-box button {
     padding: 10px;
     border: none;
