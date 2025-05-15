@@ -1,0 +1,157 @@
+@import "bootstrap-icons/font/bootstrap-icons.css";
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  
+  body {
+    font-family: sans-serif;
+    background-color: #f6f0e6;
+    color: #333;
+    
+
+  }
+main {
+    width: 90%;
+    margin: 0 auto;
+    padding: 80px 20px 20px 20px;
+    margin-top: 60px;
+    min-height: 90vh;
+}
+
+.barra-navegacao {
+  background-color: #4c3928 !important;
+  color: white !important;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+}
+
+.barra-navegacao .navbar-brand img {
+  height: 40px;
+  margin: 0.5rem 2rem 0.5rem 1rem;
+}
+
+.barra-navegacao .nav-link {
+  color: white !important;
+  margin-right: 1rem;
+  transition: color 0.3s ease;
+}
+
+.barra-navegacao .nav-link:hover {
+  color: #cfcfcf !important;
+  text-decoration: underline;
+}
+
+.barra-navegacao .bt-login {
+  width: 8rem;
+  transition: background-color 0.3s ease, color 0.3s ease;
+  margin-right: 2rem;
+}
+.barra-navegacao .bt-login:hover{
+ background-color: #7c5f45;
+  
+}
+
+.navbar-toggler {
+  border: none;
+}
+
+.navbar-toggler-icon {
+  filter: invert(1);
+}
+  
+  .intro {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 40px 20px;
+  }
+  
+  .text p {
+    margin-bottom: 20px;
+    font-size: 1.4rem;
+    color: #5D4E3C;
+  }
+  .text h1 {
+    font-size: 2rem;
+    font-weight: bold;
+  }
+  .buttons {
+    margin-top: 10px;
+    display: flex;
+    gap: 15px;
+  }
+  .link-login{
+    text-decoration: none;
+    
+  }
+  .link-login button{
+    color: white;
+    background-color: #77502e;
+  }
+
+  .btn {
+    
+   
+    height: 40px;
+    border-radius: 10px;
+    padding: 5px 15px;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: background 0.3s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    font-size: 16px;
+    
+    text-decoration: none;
+    
+  }
+  .btn-finalizar{
+      background-color: #9c5120;
+    color: white;
+    border: none;
+    transition: background-color 0.3s ease;
+  }
+  .btn-finalizar:hover{
+    background-color: #7c3d19;
+    color: white;
+  }
+  h5{
+    font-size: 26px;
+  }
+  .text-muted{
+    font-size: 20px;
+    
+  }
+  .resumo-carrinho{
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+  }
+  .livro-carrinho{
+     background-color: white;
+    border-radius: 10px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+    margin-bottom: 10px;
+  }
+footer {
+  background-color: #4c3928;
+  height: 5rem;
+  color: #eee;
+  font-size: 0.75rem;
+  text-align: center;
+  padding: 15px 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+footer p{
+  font-size: 0.9rem;
+}
+footer a {
+  color: #fff;
+  text-decoration: none;
+  font-weight: bold;
+}
