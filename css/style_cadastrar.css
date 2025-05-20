@@ -5,19 +5,22 @@
     box-sizing: border-box;
   }
   
-  body {
-    font-family: sans-serif;
-    background-color: #f6f0e6;
-    color: #333;
+body {
+  font-family: sans-serif;
+  background-color: #f6f0e6;
+  color: #333;
 
-  }
+}
 main {
     width: 90%;
     margin: 0 auto;
-    padding: 80px 20px 20px 20px;
+    padding: 30px 20px 20px 20px;
     margin-top: 60px;
 }
 
+h1{
+  font-weight: bold;
+}
 .barra-navegacao {
   background-color: #4c3928 !important;
   color: white !important;
@@ -223,6 +226,7 @@ footer a {
     display: block;
     padding-bottom: 10px;
   }
+  
 
 @media (max-width: 1024px) {
     .cadastrar-box {

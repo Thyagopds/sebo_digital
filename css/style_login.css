@@ -66,3 +66,21 @@ section {
 .login-footer a:hover {
     text-decoration: underline;
 }
+.btn-olho {
+  background: transparent;
+  border: none;
+  box-shadow: none;
+  padding: 0;
+  color: #6c757d;
+  cursor: pointer;
+}
+
+.btn-olho:hover {
+  color: #343a40;
+  background: transparent;
+}
+
+.btn-olho:focus {
+  outline: none;
+  box-shadow: none;
+}
