@@ -1,0 +1,249 @@
+@import "bootstrap-icons/font/bootstrap-icons.css";
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: sans-serif;
+    background-color: #f6f0e6;
+    color: #333;
+}
+
+main {
+    width: 90%;
+    margin: 0 auto;
+    padding: 80px 20px 20px 20px;
+    margin-top: 60px;
+    min-height: 90vh;
+}
+
+h1 {
+    font-size: 2.5rem;
+    color: #5D4E3C;
+    text-align: center;
+    text-transform: uppercase;
+    margin-bottom: 50px;
+    font-weight: bold;
+}
+
+.barra-navegacao {
+    background-color: #4c3928 !important;
+    color: white !important;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+}
+
+.barra-navegacao .navbar-brand img {
+    height: 40px;
+    margin: 0.5rem 2rem 0.5rem 1rem;
+}
+
+.barra-navegacao .nav-link {
+    color: white !important;
+    margin-right: 1rem;
+    transition: color 0.3s ease;
+}
+
+.barra-navegacao .nav-link:hover {
+    color: #cfcfcf !important;
+    text-decoration: underline;
+}
+
+.barra-navegacao .bt-login {
+    width: 8rem;
+    transition: background-color 0.3s ease, color 0.3s ease;
+    margin-right: 2rem;
+    color: white;
+    background-color: #77502e;
+}
+
+.barra-navegacao .bt-login:hover {
+    background-color: #7c5f45;
+}
+
+.navbar-toggler {
+    border: none;
+}
+
+.navbar-toggler-icon {
+    filter: invert(1);
+}
+
+.link-login {
+    text-decoration: none;
+}
+
+.cadastrar {
+    text-align: center;
+    padding: 40px 20px;
+}
+
+.cadastrar-box {
+    width: 50%;
+    margin: 40px auto;
+    padding: 40px;
+    background-color: white;
+    border-radius: 15px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+}
+
+.cadastrar-box p {
+    font-size: 1.2rem;
+    color: #555;
+    margin-bottom: 30px;
+}
+
+.cadastrar-box form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.cadastrar-box input,
+.cadastrar-box select,
+.cadastrar-box textarea {
+    width: 100%;
+    height: 56px;
+    font-size: 1rem;
+    padding: 10px;
+    border: 1px solid #aaa;
+    border-radius: 6px;
+}
+
+.cadastrar-box select {
+    background-color: white;
+}
+
+.cadastrar-box textarea {
+    height: auto;
+}
+
+.cadastrar-box input:hover,
+.cadastrar-box select:hover,
+.cadastrar-box textarea:hover {
+    border: 1px solid #9c5120;
+}
+
+.cadastrar-box input:focus,
+.cadastrar-box select:focus,
+.cadastrar-box textarea:focus {
+    outline: none;
+    box-shadow: 0 0 0 0.25rem rgba(156, 81, 32, 0.25);
+    border-color: #9c5120;
+}
+
+.cadastrar-box button {
+    padding: 10px;
+    border: none;
+    height: 50px;
+    background-color: #9c5120;
+    color: white;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background 0.3s;
+    font-size: 1rem;
+    font-weight: bold;
+    margin-top: 10px;
+}
+
+.cadastrar-box button:hover {
+    background-color: #7e3f17;
+}
+
+.cadastrar-box .input-group label {
+    text-align: left;
+    display: block;
+    padding-bottom: 10px;
+}
+
+.card {
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 6px 16px rgba(0,0,0,0.1);
+}
+
+.card-title {
+    color: #4c3928;
+    font-weight: 500;
+    font-size: 1.3rem;
+}
+
+.card-text {
+    font-size: 0.95rem;
+    color: #555;
+}
+
+.livro-img {
+    height: 200px;
+    object-fit: contain;
+    width: 100%;
+}
+
+.btn-primary {
+    background-color: #DAB88B;
+    border: none;
+}
+
+.btn-primary:hover {
+    background-color: #7c5f45;
+}
+
+.btn-danger {
+    background-color: #dc3545;
+    border: none;
+}
+
+.btn-danger:hover {
+    background-color: #c82333;
+}
+
+footer {
+    background-color: #4c3928;
+    height: 5rem;
+    color: #eee;
+    font-size: 0.9rem;
+    text-align: center;
+    padding: 15px 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+footer a {
+    color: #fff;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+@media (max-width: 1024px) {
+    .cadastrar-box {
+        width: 90%;
+    }
+}
+
+@media (max-width: 600px) {
+    body {
+        min-width: 400px;
+    }
+
+    .cadastrar h1 {
+        font-size: 2rem;
+    }
+
+    .cadastrar-box {
+        width: 100%;
+        padding: 20px;
+    }
+
+    .cadastrar-box p {
+        font-size: 1rem;
+    }
+}

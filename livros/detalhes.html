@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sebo Digital - Detalhes do Livro</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4Q6Gf2aSP4eDXB8Miphtr37CMZZQ5oXLH2yaXMJ2w8e2ZtHTl7GptT4jmndRuHDT" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="../css/style_livros_det.css">
+</head>
+<body>
+    <header>
+        <nav class="navbar navbar-expand-lg barra-navegacao fixed-top">
+            <div class="container-fluid">
+                <a class="navbar-brand" href="#">
+                    <img src="../img/logo.png" alt="logo">
+                </a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                        <li class="nav-item">
+                            <a class="nav-link active" aria-current="page" href="../index.html">Início</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="../catalogo_livros.html">Catálogo</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="../sobre_nos.html">Sobre nós</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="../doacoes.html">Doações</a>
+                        </li>
+                    </ul>
+                    <a class="link-login" href="../carrinho.html">
+                        <button class="btn bt-login d-flex align-items-center gap-3 px-3 py-2 fw-semibold shadow-sm">
+                            <i class="bi bi-cart3 fs-5"></i> Carrinho
+                        </button>
+                    </a>
+                    <a class="link-login" href="../login.html">
+                        <button class="btn bt-login d-flex align-items-center gap-3 px-3 py-2 fw-semibold shadow-sm" type="submit">
+                            <i class="bi bi-box-arrow-in-right fs-5"></i> Entrar
+                        </button>
+                    </a>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <main class="container py-5">
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="../index.html">Início</a></li>
+                <li class="breadcrumb-item"><a href="../catalogo_livros.html">Catálogo</a></li>
+                <li class="breadcrumb-item active" aria-current="page">Livro</li>
+            </ol>
+        </nav>
+
+        <!-- Card principal -->
+        <div class="mb-5 border-0" id="book-details">
+            <div class="row g-0 align-items-center">
+                <!-- Imagem -->
+                <div class="col-sm-12 col-xs-12 col-md-12 col-xl-4 text-center p-4">
+                    <img id="book-image" src="../img/placeholder.jpg" alt="Capa do livro" class="img-fluid rounded" width="85%" style="border-radius: 10px; max-height: 600px; object-fit: contain;">
+                </div>
+                <!-- Informações -->
+                <div class="col-sm-12 col-xs-12 col-md-12 col-xl-8 p-5">
+                    <h2 id="book-title" class="mb-3 text-dark">Carregando...</h2>
+                    <p id="book-description" class="text-muted">Carregando descrição...</p>
+                    <h3 id="book-price" class="text-success fw-bold mt-4 mb-4">R$ 0,00</h3>
+                    <button class="btn btn-xl comprar-btn">
+                        <i class="bi bi-cart-plus me-2"></i> Comprar Agora
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Tabela de informações adicionais -->
+        <h4 class="mb-3">Informações do Produto</h4>
+        <div class="table-responsive rounded border">
+            <table class="table table-hover align-middle mb-0">
+                <thead class="table-light">
+                    <tr>
+                        <th scope="col"><i class="bi bi-info-circle"></i> Campo</th>
+                        <th scope="col"><i class="bi bi-card-text"></i> Descrição</th>
+                    </tr>
+                </thead>
+                <tbody id="book-info-table">
+                    <tr>
+                        <th scope="row"><i class="bi bi-book"></i> Título</th>
+                        <td id="table-title">Carregando...</td>
+                    </tr>
+                    <tr>
+                        <th scope="row"><i class="bi bi-person"></i> Autor</th>
+                        <td id="table-author">Carregando...</td>
+                    </tr>
+                    <tr>
+                        <th scope="row"><i class="bi bi-tags"></i> Gênero</th>
+                        <td id="table-genre">Carregando...</td>
+                    </tr>
+                    <tr>
+                        <th scope="row"><i class="bi bi-check-circle"></i> Condição</th>
+                        <td id="table-condition">Carregando...</td>
+                    </tr>
+                    <tr>
+                        <th scope="row"><i class="bi bi-file-text"></i> Descrição</th>
+                        <td id="table-description">Carregando...</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Mensagem de erro caso o livro não seja encontrado -->
+        <div id="error-message" class="alert alert-danger d-none" role="alert">
+            Livro não encontrado. <a href="../catalogo_livros.html">Voltar ao catálogo</a>.
+        </div>
+    </main>
+
+    <footer>
+        <p>© 2025 Sebo Digital. Todos os direitos reservados.</p>
+        <a href="#">↑ Voltar ao topo</a>
+    </footer>
+
+    <script src="../js/detalhes.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/js/bootstrap.bundle.min.js" integrity="sha384-j1CDi7MgGQ12Z7Qab0qlWQ/Qcz24Gc6BM0thvEMVjHnfYGF0rmFCozFSxQBxwHKO" crossorigin="anonymous"></script>
+</body>
+</html>
