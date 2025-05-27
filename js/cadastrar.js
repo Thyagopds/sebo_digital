@@ -7,20 +7,29 @@ document.addEventListener('DOMContentLoaded', () => {
         const books = JSON.parse(localStorage.getItem('books')) || [];
         booksList.innerHTML = '';
 
+        if (books.length === 0) {
+            booksList.innerHTML = '<p class="nenhum-livro">Nenhum livro cadastrado.</p>';
+            return;
+        }
+
         books.forEach(book => {
             const bookCard = `
-                <div class="col">
-                    <div class="card h-100 shadow-sm">
-                        <div class="d-flex justify-content-center img-livro-card">
-                            <img src="${book.image || 'img/placeholder.jpg'}" class="card-img-top livro-img rounded" alt="${book.title}" style="max-height: 200px; object-fit: contain;">
-                        </div>
-                        <div class="card-body">
-                            <h5 class="card-title">${book.title}</h5>
-                            <p class="card-text">Autor: ${book.author}</p>
-                            <p class="card-text">Preço: R$ ${book.price}</p>
-                            <div class="d-flex gap-2">
-                                <button class="btn btn-danger btn-sm remove-book" data-id="${book.id}">Remover</button>
-                                <a href="editar.html?id=${book.id}" class="btn btn-primary btn-sm">Editar</a>
+                <div class="col-12 col-md-6 col-lg-5 col-xl-4 col-xxl-3 mb-4">
+                    <div class="card h-100 shadow-sm border-0 flex-row align-items-center p-3">
+                        <img src="${book.image || 'img/placeholder.jpg'}" class="livro-img rounded" alt="${book.title}">
+                        <div class="card-body p-0 d-flex flex-column align-items-center text-center w-100">
+                            <div>
+                                <h5 class="card-title fw-bold">${book.title}</h5>
+                                <p class="card-text mb-1"><strong>Autor:</strong> ${book.author}</p>
+                                <p class="card-text mb-2"><strong>Preço:</strong> R$ ${book.price}</p>
+                            </div>
+                            <div class="mt-3 d-flex justify-content-center gap-2">
+                                <button class="btn btn-outline-danger btn-sm remove-book" data-id="${book.id}" title="Remover">
+                                    <i class="bi bi-trash"></i>
+                                </button>
+                                <a href="editar.html?id=${book.id}" class="btn btn-outline-primary btn-sm" title="Editar">
+                                    <i class="bi bi-pencil"></i>
+                                </a>
                             </div>
                         </div>
                     </div>
@@ -29,7 +38,7 @@ document.addEventListener('DOMContentLoaded', () => {
             booksList.insertAdjacentHTML('beforeend', bookCard);
         });
 
-        // Adicionar eventos aos botões de remover
+        // Eventos de clique para remover
         document.querySelectorAll('.remove-book').forEach(button => {
             button.addEventListener('click', () => {
                 const bookId = button.getAttribute('data-id');
@@ -47,14 +56,38 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // Função para remover um livro
+    let bookIdToRemove = null; // Guardar o ID temporariamente
+
     function removeBook(bookId) {
-        if (confirm('Tem certeza que deseja remover este livro?')) {
-            let books = JSON.parse(localStorage.getItem('books')) || [];
-            books = books.filter(book => book.id != bookId);
-            localStorage.setItem('books', JSON.stringify(books));
-            loadBooks(); // Atualizar a lista após remover
-            alert('Livro removido com sucesso!');
-        }
+        bookIdToRemove = bookId; // Armazenar o ID do livro para remoção
+        const modal = new bootstrap.Modal(document.getElementById('confirmDeleteModal'));
+        modal.show();
+    }
+
+    document.getElementById('confirmDeleteBtn').addEventListener('click', () => {
+    if (bookIdToRemove !== null) {
+        let books = JSON.parse(localStorage.getItem('books')) || [];
+        books = books.filter(book => book.id != bookIdToRemove);
+        localStorage.setItem('books', JSON.stringify(books));
+        loadBooks(); // Atualizar a lista
+        showSuccessMessage('Livro removido com sucesso!');
+        bookIdToRemove = null;
+
+        const modal = bootstrap.Modal.getInstance(document.getElementById('confirmDeleteModal'));
+        modal.hide();
+    }
+    });
+
+    // Função auxiliar para exibir mensagem de sucesso
+    function showSuccessMessage(message) {
+        const msgDiv = document.getElementById('mensagem-sucesso');
+        msgDiv.textContent = ''; // Limpa conteúdo anterior
+        msgDiv.innerHTML = `<i class="bi bi-check-circle-fill me-2"></i> ${message}`;
+        msgDiv.classList.remove('d-none');
+
+        setTimeout(() => {
+            msgDiv.classList.add('d-none');
+        }, 5000);
     }
 
     // Evento de submissão do formulário
@@ -90,13 +123,25 @@ document.addEventListener('DOMContentLoaded', () => {
             reader.onload = (e) => {
                 book.image = e.target.result; // Imagem em Base64
                 saveBook(book);
-                alert('Livro cadastrado com sucesso!');
+                const mensagem = document.getElementById('mensagem-sucesso');
+                mensagem.classList.remove('d-none');
+
+                // Ocultar a mensagem após 3 segundos
+                setTimeout(() => {
+                    mensagem.classList.add('d-none');
+                }, 5000);
                 form.reset();
             };
             reader.readAsDataURL(imageInput.files[0]);
         } else {
             saveBook(book);
-            alert('Livro cadastrado com sucesso!');
+            const mensagem = document.getElementById('mensagem-sucesso');
+            mensagem.classList.remove('d-none');
+
+            // Ocultar a mensagem após 3 segundos
+            setTimeout(() => {
+                mensagem.classList.add('d-none');
+            }, 5000);
             form.reset();
         }
     });

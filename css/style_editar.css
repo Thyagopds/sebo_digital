@@ -222,6 +222,10 @@ footer a {
     text-decoration: none;
     font-weight: bold;
 }
+footer p{
+    margin: 0;
+}
+
 
 @media (max-width: 1024px) {
     .cadastrar-box {
