@@ -23,6 +23,7 @@ document.addEventListener('DOMContentLoaded', () => {
     form.querySelector('#condicao').value = book.condition;
     form.querySelector('#preco').value = book.price;
     form.querySelector('#descricao').value = book.description || '';
+    
 
     // Evento de submissão do formulário
     form.addEventListener('submit', (event) => {
@@ -53,18 +54,28 @@ document.addEventListener('DOMContentLoaded', () => {
         };
 
         const reader = new FileReader();
+        const mensagemEdicao = document.getElementById('mensagem-edicao');
+
         if (imageInput.files.length > 0) {
             reader.onload = (e) => {
-                updatedBook.image = e.target.result; // Atualiza a imagem se uma nova for enviada
+                updatedBook.image = e.target.result; // Atualiza a imagem
                 updateBook(updatedBook);
-                alert('Livro atualizado com sucesso!');
-                window.location.href = './cadastrar.html';
+
+                // Mostra a mensagem de sucesso
+                mensagemEdicao.classList.remove('d-none');
+
+                // Redireciona após 2 segundos
+                setTimeout(() => {
+                    window.location.href = './cadastrar.html';
+                }, 2000);
             };
             reader.readAsDataURL(imageInput.files[0]);
         } else {
             updateBook(updatedBook);
-            alert('Livro atualizado com sucesso!');
-            window.location.href = './cadastrar.html';
+            mensagemEdicao.classList.remove('d-none');
+            setTimeout(() => {
+                window.location.href = './cadastrar.html';
+            }, 2000);
         }
     });
 

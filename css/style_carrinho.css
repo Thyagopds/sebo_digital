@@ -136,6 +136,19 @@ main {
     box-shadow: 0 2px 6px rgba(0,0,0,0.1);
     margin-bottom: 10px;
   }
+
+  .carrinho-vazio{
+    display: flex !important;
+    justify-content: center !important;
+    align-items: center !important;
+    margin-top: 20px;
+    font-size: 1.2rem;
+    color: #555;
+  }
+  .breadcrumb a{
+  color: #4c3928;
+}
+
 footer {
   background-color: #4c3928;
   height: 5rem;
@@ -149,6 +162,7 @@ footer {
 }
 footer p{
   font-size: 0.9rem;
+  margin: 0;
 }
 footer a {
   color: #fff;

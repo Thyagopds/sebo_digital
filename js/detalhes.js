@@ -38,4 +38,30 @@ document.addEventListener('DOMContentLoaded', () => {
     tableGenre.textContent = book.genre.charAt(0).toUpperCase() + book.genre.slice(1);
     tableCondition.textContent = book.condition.charAt(0).toUpperCase() + book.condition.slice(1);
     tableDescription.textContent = book.description || 'Nenhuma descrição disponível.';
+
+    document.querySelector('.comprar-btn').addEventListener('click', () => {
+    const cart = JSON.parse(localStorage.getItem('cart')) || [];
+
+    const existing = cart.find(item => item.id === book.id);
+    if (existing) {
+        existing.quantity += 1;
+    } else {
+        cart.push({
+        id: book.id,
+        title: book.title,
+        price: book.price,
+        image: book.image || '../img/placeholder.jpg',
+        quantity: 1
+        });
+    }
+
+    localStorage.setItem('cart', JSON.stringify(cart));
+    const mensagem = document.getElementById('mensagem-sucesso');
+    mensagem.classList.remove('d-none');
+
+    // Ocultar a mensagem após 3 segundos
+    setTimeout(() => {
+        mensagem.classList.add('d-none');
+    }, 5000);
+    });
 });

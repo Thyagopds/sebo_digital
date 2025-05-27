@@ -12,9 +12,9 @@ body {
 
 }
 main {
-    width: 90%;
+    width: 92%;
     margin: 0 auto;
-    padding: 30px 20px 20px 20px;
+    padding: 30px 0 0 20px;
     margin-top: 60px;
 }
 
@@ -83,7 +83,7 @@ h1{
     gap: 15px;
   }
   
-  .btn {
+  .bt-login {
     background-color: #DAB88B;
     width: 30%;
     height: 40px;
@@ -99,7 +99,7 @@ h1{
     font-size: 16px;
     color: white;
   }
-  .btn:hover {
+  .bt-login:hover {
     background-color: #5D4E3C;
     color: white;
   }
@@ -156,6 +156,65 @@ h1{
     padding: 10px;
     border: 1px solid #aaa;
     border-radius: 6px;
+}
+h2{
+  font-weight: bold;
+}
+.nenhum-livro {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 40px;
+    font-size: 1.2rem;
+    color: #555;
+}
+
+/* Agora usa grid do Bootstrap */
+#books-list {
+    display: flex;
+    flex-wrap: wrap;
+    
+    padding: 20px;
+}
+
+/* Imagem ao lado */
+.livro-img {
+    width: 140px;
+    height: 220px;
+    object-fit: contain;
+    border-radius: 10px;
+}
+
+/* Ícones maiores */
+.card-body i.bi {
+    font-size: 1.4rem;
+    transition: all 0.3s ease;
+}
+
+/* Botão de remover */
+.card-body .btn-outline-danger {
+    border: 1px solid #dc3545;
+    color: #dc3545;
+    background-color: transparent;
+    padding: 6px 10px;
+}
+
+.card-body .btn-outline-danger:hover {
+    background-color: #dc3545;
+    color: #fff;
+}
+
+/* Botão de editar */
+.card-body .btn-outline-primary {
+    border: 1px solid #0d6efd;
+    color: #0d6efd;
+    background-color: transparent;
+    padding: 6px 10px;
+}
+
+.card-body .btn-outline-primary:hover {
+    background-color: #0d6efd;
+    color: #fff;
 }
 
 .cadastrar-box textarea {
@@ -220,6 +279,10 @@ footer a {
     text-decoration: none;
     font-weight: bold;
 }
+footer p{
+    margin: 0;
+}
+
 
 .cadastrar-box .input-group label {
     text-align: left;
@@ -232,8 +295,31 @@ footer a {
     .cadastrar-box {
         width: 90%;
     }
+
+    /* Ajustar imagem menor e melhor encaixe */
+    .livro-img {
+        width: 120px;
+        height: 200px;
+    }
+
+    .card.h-100 {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+    }
+
+    .card-body {
+        align-items: center;
+        text-align: center;
+    }
+
+    .card-body .mt-3 {
+        justify-content: center;
+        flex-wrap: wrap;
+    }
 }
 
+/* Celulares */
 @media (max-width: 600px) {
     body {
         min-width: 400px;
@@ -266,5 +352,33 @@ footer a {
 
     .cadastrar-box p {
         font-size: 1rem;
+    }
+
+    /* Layout vertical para o card */
+    .card.h-100 {
+      display: flex !important;
+      flex-direction: column !important;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+    }
+
+    .livro-img {
+        width: 100%;
+        height: auto;
+        
+        max-height: 250px;
+        margin-bottom: 1rem;
+        margin-right: 0;
+    }
+
+    .card-body {
+        align-items: center;
+        text-align: center;
+    }
+
+    .card-body .mt-3 {
+        justify-content: center;
+        flex-wrap: wrap;
     }
 }
