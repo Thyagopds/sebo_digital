@@ -6,12 +6,16 @@
   }
   
   body {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
     font-family: sans-serif;
     background-color: #f6f0e6;
     color: #333;
 
   }
 main {
+  flex: 1;
     width: 90%;
     margin: 0 auto;
     padding: 80px 20px 20px 20px;
@@ -220,6 +224,7 @@ footer {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  margin-top: auto;
 }
 
 footer p {

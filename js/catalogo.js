@@ -2,29 +2,43 @@ document.addEventListener('DOMContentLoaded', () => {
     const booksContainer = document.querySelector('#booksContainer');
     const searchInput = document.querySelector('#searchInput');
     const sortSelect = document.querySelector('#sortSelect');
-    
-    function loadBooks(searchTerm = '', sortBy = '') {
+    const genreSelect = document.querySelector('#genreSelect');
+    const stateSelect = document.querySelector('#stateSelect');
+
+    function loadBooks() {
         let books = JSON.parse(localStorage.getItem('books')) || [];
-        
-        // Filtrar por termo de pesquisa
+
+        const searchTerm = searchInput.value.trim().toLowerCase();
+        const sortBy = sortSelect.value;
+        const selectedGenre = genreSelect ? genreSelect.value : '';
+        const selectedState = stateSelect ? stateSelect.value : '';
+
         if (searchTerm) {
             books = books.filter(book =>
-                book.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                book.author.toLowerCase().includes(searchTerm.toLowerCase())
+                book.title.toLowerCase().includes(searchTerm) ||
+                book.author.toLowerCase().includes(searchTerm)
             );
         }
-        
-        // Ordenar
-        if (sortBy === 'nome') {
-            books.sort((a, b) => a.title.localeCompare(b.title));
-        } else if (sortBy === 'preco') {
-            books.sort((a, b) => parseFloat(a.price) - parseFloat(b.price));
+
+        if (selectedGenre) {
+            books = books.filter(book => book.genre === selectedGenre);
         }
-        
-        // Limpar container
+
+        if (selectedState) {
+            books = books.filter(book => book.condition === selectedState);
+        }
+
+        if (sortBy === 'nome-asc') {
+            books.sort((a, b) => a.title.localeCompare(b.title));
+        } else if (sortBy === 'nome-desc') {
+            books.sort((a, b) => b.title.localeCompare(a.title));
+        } else if (sortBy === 'preco-asc') {
+            books.sort((a, b) => parseFloat(a.price) - parseFloat(b.price));
+        } else if (sortBy === 'preco-desc') {
+            books.sort((a, b) => parseFloat(b.price) - parseFloat(a.price));
+        }
+
         booksContainer.innerHTML = '';
-        
-        // Renderizar livros
         books.forEach(book => {
             const bookCard = `
                 <div class="col mt-3">
@@ -44,17 +58,11 @@ document.addEventListener('DOMContentLoaded', () => {
             booksContainer.insertAdjacentHTML('beforeend', bookCard);
         });
     }
-    
-    // Carregar livros iniciais
+
     loadBooks();
-    
-    // Evento de pesquisa
-    searchInput.addEventListener('input', () => {
-        loadBooks(searchInput.value, sortSelect.value);
-    });
-    
-    // Evento de ordenação
-    sortSelect.addEventListener('change', () => {
-        loadBooks(searchInput.value, sortSelect.value);
-    });
+
+    searchInput.addEventListener('input', loadBooks);
+    sortSelect.addEventListener('change', loadBooks);
+    genreSelect.addEventListener('change', loadBooks);
+    stateSelect.addEventListener('change', loadBooks);
 });

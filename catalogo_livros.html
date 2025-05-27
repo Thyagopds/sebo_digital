@@ -67,26 +67,47 @@
     </nav>
     <h1 class="mt-5 mb-7 text-center">Catálogo de Livros</h1>
 
-    <form action="" class="row mb-1 justify-content-between align-items-end">
-      <div class="col-md-8 mb-3">
+    <form class="row mb-1 justify-content-between align-items-end">
+      <div class="col-md-4 mb-3">
         <input id="searchInput" type="text" class="form-control form-control-lg" placeholder="Pesquisar livros...">
+      </div>
+      <div class="col-md-2 mb-3">
+        <select id="genreSelect" class="form-select form-select-lg">
+          <option value="">Todos os Gêneros</option>
+          <option value="ficcao">Ficção</option>
+          <option value="nao-ficcao">Não-ficção</option>
+          <option value="romance">Romance</option>
+          <option value="misterio">Mistério</option>
+          <option value="fantasia">Fantasia</option>
+          <option value="outro">Outro</option>
+        </select>
+      </div>
+      <div class="col-md-2 mb-3">
+        <select id="stateSelect" class="form-select form-select-lg">
+          <option value="">Todos os Estados</option>
+          <option value="Novo">Novo</option>
+          <option value="Como novo">Como novo</option>
+          <option value="Bom">Bom</option>
+          <option value="Usado">Usado</option>
+        </select>
       </div>
       <div class="col-md-4 mb-3">
         <select id="sortSelect" class="form-select form-select-lg">
-          <option disabled selected>Ordenar por</option>
-          <option value="nome">Nome</option>
-          <option value="preco">Preço</option>
+          <option value="">Ordenar por</option>
+          <option value="nome-asc">Nome (A-Z)</option>
+          <option value="nome-desc">Nome (Z-A)</option>
+          <option value="preco-asc">Preço (menor &gt; maior)</option>
+          <option value="preco-desc">Preço (maior &gt; menor)</option>
         </select>
       </div>
     </form>
-
 
     <section id="booksSection" class="livros-disponiveis">
 
 
       <div id="booksContainer" class="row row-cols-1 row-cols-md-2 row-cols-lg-2 row-cols-xl-3 row-cols-xxl-4 g-6">
 
-  
+
       </div>
     </section>
   </main>
