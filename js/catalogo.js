@@ -47,8 +47,12 @@ document.addEventListener('DOMContentLoaded', () => {
                             <div class="d-flex justify-content-center img-livro-card">
                                 <img src="${book.image || 'img/placeholder.jpg'}" class="card-img-top livro-img rounded" alt="${book.title}">
                             </div>
-                            <div class="card-body d-flex flex-column align-items-start">
-                                <h5 class="card-title">${book.title}</h5>
+                            <div class="card-body d-flex align-items-start align-items-strong">
+                                <div class="p-2">
+                                    <h5 class="card-title m-0 p-0">${book.title}</h5>
+                                    <p class="card-text mb-1"><strong>Autor:</strong> ${book.author}</p>
+                                    <p class="card-text mb-2"><strong>Gênero:</strong> ${book.genre}</p>
+                                </div>
                                 <div class="livro-preco mt-auto">R$ ${book.price}</div>
                             </div>
                         </div>

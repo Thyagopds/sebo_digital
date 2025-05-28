@@ -238,6 +238,10 @@ footer a {
   font-weight: bold;
 
 }
+.card-title {
+  font-size: 1.8rem;
+  font-weight: bold !important;
+}
 
 /* .livros-disponiveis {
   text-align: center;
