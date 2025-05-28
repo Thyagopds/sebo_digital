@@ -2,7 +2,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const form = document.querySelector('#cadastro-form');
     const booksList = document.querySelector('#books-list');
 
-    // Função para carregar e exibir a lista de livros
     function loadBooks() {
         const books = JSON.parse(localStorage.getItem('books')) || [];
         booksList.innerHTML = '';
@@ -38,7 +37,6 @@ document.addEventListener('DOMContentLoaded', () => {
             booksList.insertAdjacentHTML('beforeend', bookCard);
         });
 
-        // Eventos de clique para remover
         document.querySelectorAll('.remove-book').forEach(button => {
             button.addEventListener('click', () => {
                 const bookId = button.getAttribute('data-id');
@@ -47,19 +45,17 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // Função para salvar um livro
     function saveBook(book) {
         let books = JSON.parse(localStorage.getItem('books')) || [];
         books.push(book);
         localStorage.setItem('books', JSON.stringify(books));
-        loadBooks(); // Atualizar a lista após salvar
+        loadBooks(); 
     }
 
-    // Função para remover um livro
-    let bookIdToRemove = null; // Guardar o ID temporariamente
+    let bookIdToRemove = null;
 
     function removeBook(bookId) {
-        bookIdToRemove = bookId; // Armazenar o ID do livro para remoção
+        bookIdToRemove = bookId; 
         const modal = new bootstrap.Modal(document.getElementById('confirmDeleteModal'));
         modal.show();
     }
@@ -69,7 +65,7 @@ document.addEventListener('DOMContentLoaded', () => {
         let books = JSON.parse(localStorage.getItem('books')) || [];
         books = books.filter(book => book.id != bookIdToRemove);
         localStorage.setItem('books', JSON.stringify(books));
-        loadBooks(); // Atualizar a lista
+        loadBooks(); 
         showSuccessMessage('Livro removido com sucesso!');
         bookIdToRemove = null;
 
@@ -78,10 +74,9 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     });
 
-    // Função auxiliar para exibir mensagem de sucesso
     function showSuccessMessage(message) {
         const msgDiv = document.getElementById('mensagem-sucesso');
-        msgDiv.textContent = ''; // Limpa conteúdo anterior
+        msgDiv.textContent = ''; 
         msgDiv.innerHTML = `<i class="bi bi-check-circle-fill me-2"></i> ${message}`;
         msgDiv.classList.remove('d-none');
 
@@ -90,7 +85,6 @@ document.addEventListener('DOMContentLoaded', () => {
         }, 5000);
     }
 
-    // Evento de submissão do formulário
     form.addEventListener('submit', (event) => {
         event.preventDefault();
         
@@ -109,7 +103,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         const reader = new FileReader();
         const book = {
-            id: Date.now(), // ID único baseado no timestamp
+            id: Date.now(), 
             title,
             author,
             genre,
@@ -121,12 +115,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
         if (imageInput.files.length > 0) {
             reader.onload = (e) => {
-                book.image = e.target.result; // Imagem em Base64
+                book.image = e.target.result; 
                 saveBook(book);
                 const mensagem = document.getElementById('mensagem-sucesso');
                 mensagem.classList.remove('d-none');
-
-                // Ocultar a mensagem após 3 segundos
                 setTimeout(() => {
                     mensagem.classList.add('d-none');
                 }, 5000);
@@ -138,7 +130,6 @@ document.addEventListener('DOMContentLoaded', () => {
             const mensagem = document.getElementById('mensagem-sucesso');
             mensagem.classList.remove('d-none');
 
-            // Ocultar a mensagem após 3 segundos
             setTimeout(() => {
                 mensagem.classList.add('d-none');
             }, 5000);
@@ -146,6 +137,5 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    // Carregar livros ao iniciar
     loadBooks();
 });

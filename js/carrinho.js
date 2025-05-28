@@ -13,8 +13,8 @@ document.addEventListener('DOMContentLoaded', () => {
   function updateTotal() {
     const total = cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
     cartTotalElement.textContent = formatPrice(total);
-    localStorage.setItem('cart', JSON.stringify(cart)); // persistir
-  }
+    localStorage.setItem('cart', JSON.stringify(cart)); 
+  } 
 
   function renderCart() {
     cartItemsContainer.innerHTML = '';
@@ -25,7 +25,6 @@ document.addEventListener('DOMContentLoaded', () => {
       cartItemsContainer.innerHTML = '<div class="carrinho-vazio"><p class="text-center">Seu carrinho está vazio.</p></div>';
       cartTotalElement.textContent = formatPrice(0);
 
-      // Remove classes e esconde resumo
       cartItemsContainer.classList.remove('livro-carrinho', 'justify-content-between', 'col-md-7');
       if (resumoElement) resumoElement.style.display = 'none';
       return;
@@ -79,10 +78,9 @@ document.addEventListener('DOMContentLoaded', () => {
     updateTotal();
   }
 
-  // Evento de finalizar compra
   finalizarBtn.addEventListener('click', () => {
     localStorage.removeItem('cart');
-    cart.length = 0; // limpa o array cart
+    cart.length = 0; 
     renderCart();
 
     const mensagem = document.createElement('div');

@@ -1,13 +1,10 @@
 document.addEventListener('DOMContentLoaded', () => {
-    // Extrair o ID do livro do parâmetro de consulta da URL
     const urlParams = new URLSearchParams(window.location.search);
     const bookId = urlParams.get('id');
 
-    // Carregar livros do localStorage
     const books = JSON.parse(localStorage.getItem('books')) || [];
     const book = books.find(b => b.id == bookId);
 
-    // Elementos do DOM
     const errorMessage = document.getElementById('error-message');
     const bookDetails = document.getElementById('book-details');
     const bookImage = document.getElementById('book-image');
@@ -21,13 +18,11 @@ document.addEventListener('DOMContentLoaded', () => {
     const tableDescription = document.getElementById('table-description');
 
     if (!book) {
-        // Mostrar mensagem de erro se o livro não for encontrado
         errorMessage.classList.remove('d-none');
         bookDetails.classList.add('d-none');
         return;
     }
 
-    // Preencher os dados do livro
     bookImage.src = book.image || '../img/placeholder.jpg';
     bookImage.alt = book.title;
     bookTitle.textContent = book.title;
@@ -59,7 +54,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const mensagem = document.getElementById('mensagem-sucesso');
     mensagem.classList.remove('d-none');
 
-    // Ocultar a mensagem após 3 segundos
     setTimeout(() => {
         mensagem.classList.add('d-none');
     }, 5000);

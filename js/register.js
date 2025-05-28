@@ -5,8 +5,6 @@ document.addEventListener('DOMContentLoaded', function () {
 
   form.addEventListener('submit', function (e) {
     e.preventDefault();
-
-    // Oculta alertas anteriores
     sucesso.classList.add('d-none');
     erro.classList.add('d-none');
 
@@ -35,7 +33,6 @@ document.addEventListener('DOMContentLoaded', function () {
   });
 });
 
-// Função para mostrar/ocultar senha
 function toggleSenha(idInput, btn) {
   const input = document.getElementById(idInput);
   const icon = btn.querySelector('i');

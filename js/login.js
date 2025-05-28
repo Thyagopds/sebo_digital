@@ -6,24 +6,17 @@ document.addEventListener('DOMContentLoaded', function () {
 
   form.addEventListener('submit', function (e) {
     e.preventDefault();
-
-    // Oculta o alerta anterior
     erro.classList.add('d-none');
-
     const email = emailInput.value.trim();
     const senha = senhaInput.value;
-
-    // Verificação de credenciais fixas
     if (email === 'admin@gmail.com' && senha === 'admin123') {
-      // Simula redirecionamento após login válido
-      window.location.href = 'cadastrar.html'; // substitua por sua página de destino
+      window.location.href = 'cadastrar.html'; 
     } else {
       erro.classList.remove('d-none');
     }
   });
 });
 
-// Função para mostrar/ocultar senha
 function toggleSenha(idInput, btn) {
     const input = document.getElementById(idInput);
     const icon = btn.querySelector('i');
