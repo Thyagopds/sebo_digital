@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Usuários | Admin - Sebo Digital</title>
+
+  <!-- Estilos Bootstrap e ícones -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/css/bootstrap.min.css" rel="stylesheet"/>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css"/>
+
+  <!-- Estilos personalizados -->
+  <link rel="stylesheet" href="css/header.css">
+  <link rel="stylesheet" href="css/style_index_admin.css"/>
+  <link rel="stylesheet" href="css/user_list.css"/>
+
+</head>
+<body>
+  <div id="app" style="display: none">
+
+  <!-- Cabeçalho dinâmico -->
+
+  <main class="container py-5 mt-10">
+    <nav aria-label="breadcrumb" class="mb-4">
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="index_admin.html">Painel Admin</a></li>
+        <li class="breadcrumb-item active" aria-current="page">Lista de Usuários</li>
+      </ol>
+    </nav>
+
+    <h2 class="mb-4 text-center">Lista de Usuários Cadastrados</h2>
+
+    <div class="table-responsive">
+      <table class="table user-table table-hover">
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Nome</th>
+            <th>Email</th>
+            <th>Tipo</th>
+            <th>Data de Cadastro</th>
+          </tr>
+        </thead>
+        <tbody id="user-table-body">
+          <!-- Conteúdo gerado via JS -->
+        </tbody>
+      </table>
+    </div>
+
+  </main>
+
+  <footer class="text-center mt-5 mb-3">
+    <p>© 2025 Sebo Digital. Todos os direitos reservados.</p>
+    <a href="#">↑ Voltar ao topo</a>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/js/bootstrap.bundle.min.js"></script>
+  <script type="module" src="./js/userList.js"></script>
+    <script type="module">
+    import { loadHeader } from './js/components/header.js';
+    loadHeader();
+  </script>
+</div>
+</body>
+</html>

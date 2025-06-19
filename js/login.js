@@ -1,17 +1,39 @@
-document.addEventListener('DOMContentLoaded', function () {
+import { auth, db } from './firebaseConfig.js';
+import { signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/9.0.0/firebase-auth.js";
+import { ref, get } from "https://www.gstatic.com/firebasejs/9.0.0/firebase-database.js";
+
+document.addEventListener('DOMContentLoaded', () => {
   const form = document.querySelector('form');
   const emailInput = document.getElementById('email');
   const senhaInput = document.getElementById('senha');
   const erro = document.getElementById('mensagem-erro');
 
-  form.addEventListener('submit', function (e) {
+  form.addEventListener('submit', async (e) => {
     e.preventDefault();
     erro.classList.add('d-none');
+
     const email = emailInput.value.trim();
     const senha = senhaInput.value;
-    if (email === 'admin@gmail.com' && senha === 'admin123') {
-      window.location.href = 'cadastrar.html'; 
-    } else {
+
+    try {
+      const cred = await signInWithEmailAndPassword(auth, email, senha);
+      const uid = cred.user.uid;
+
+      const snapshot = await get(ref(db, 'usuarios/' + uid));
+      const dados = snapshot.val();
+
+      if (!dados || !dados.role) {
+        throw new Error("Usuário sem role definida.");
+      }
+
+      if (dados.role === 'admin') {
+        window.location.href = 'index_admin.html';
+      } else {
+        window.location.href = 'catalogo_livros.html';
+      }
+
+    } catch (err) {
+      erro.textContent = "Credenciais inválidas ou erro: " + err.message;
       erro.classList.remove('d-none');
     }
   });
