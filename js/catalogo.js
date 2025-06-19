@@ -42,14 +42,16 @@ document.addEventListener('DOMContentLoaded', () => {
         books.forEach(book => {
             const bookCard = `
                 <div class="col mt-3">
-                    <a href="livros/detalhes.html?id=${book.id}" class="text-decoration-none text-dark">
+                    <a href="detalhes.html?id=${book.id}" class="text-decoration-none text-dark">
                         <div class="card h-100 shadow-sm livro-card">
                             <div class="d-flex justify-content-center img-livro-card">
                                 <img src="${book.image || 'img/placeholder.jpg'}" class="card-img-top livro-img rounded" alt="${book.title}">
                             </div>
-                            <div class="card-body d-flex align-items-start align-items-strong">
+                            <div class="card-body d-flex flex-column">
                                 <div class="p-2">
-                                    <h5 class="card-title m-0 p-0">${book.title}</h5>
+                               
+                                    <h5 class="card-title m-0 p-0 truncate-one-line">${book.title}</h5>
+                                   
                                     <p class="card-text mb-1"><strong>Autor:</strong> ${book.author}</p>
                                     <p class="card-text mb-2"><strong>Gênero:</strong> ${book.genre}</p>
                                 </div>

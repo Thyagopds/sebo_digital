@@ -1,0 +1,107 @@
+/* css/user_list.css */
+
+.user-table {
+  background-color: #fff;
+  border-radius: 10px;
+  overflow: hidden;
+  font-size: 0.95rem;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  width: 100%;
+  margin-top: 40px;
+}
+
+.user-table thead {
+  background-color: #4c3928;
+  color: #fff;
+  font-weight: bold;
+  text-align: center;
+}
+
+.user-table th, .user-table td {
+  padding: 12px 16px;
+  vertical-align: middle;
+  text-align: center;
+}
+
+.user-table tbody tr:nth-child(even) {
+  background-color: #f6f0e6;
+}
+
+.user-table tbody tr:hover {
+  background-color: #ffeccc;
+}
+/* Define largura maior para modal */
+.modal-lg {
+  max-width: 900px;
+}
+
+/* Seção da imagem */
+.image-section {
+  min-width: 180px;
+max-width: 180px; /* força a largura máxima */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* Preview da imagem */
+.img-preview {
+  width: 150px !important;
+  height: 200px !important;
+  max-width: 100% !important;
+  max-height: 200px !important;
+  object-fit: contain;
+  border-radius: 6px;
+  box-shadow: 0 0 8px rgba(0,0,0,0.15);
+  margin-bottom: 0.5rem;
+}
+
+/* Espaçamento e responsividade do form */
+.form-section .row > div {
+  /* opcional: deixa campos com espaçamento */
+  /* Já temos g-3 no row do bootstrap, que faz isso */
+}
+
+/* Modal padding e sombra mais leve */
+.modal-content {
+  border-radius: 12px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+}
+
+/* Título mais clean */
+.modal-header {
+  border-bottom: none;
+}
+
+/* Botões com espaçamento */
+.modal-footer {
+  border-top: none;
+}
+
+/* Responsividade para telas menores */
+@media (max-width: 768px) {
+  .modal-body {
+    flex-direction: column;
+  }
+
+  .image-section {
+    min-width: auto;
+    margin-bottom: 1rem;
+  }
+}
+
+#addLivroBtn{
+  background-color: #4c3928 !important;
+  color: #fff;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 6px;
+  font-size: 16px;
+}
+#addLivroBtn:hover {
+  background-color: #3b2a1f !important;
+  color: #fff;
+}
+.bi-plus-lg {
+  margin-right: 10px;
+}

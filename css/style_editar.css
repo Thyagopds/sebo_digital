@@ -1,4 +1,4 @@
-@import "bootstrap-icons/font/bootstrap-icons.css";
+
 
 * {
     margin: 0;
@@ -27,48 +27,6 @@ h1 {
     text-transform: uppercase;
     margin-bottom: 50px;
     font-weight: bold;
-}
-
-.barra-navegacao {
-    background-color: #4c3928 !important;
-    color: white !important;
-    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-}
-
-.barra-navegacao .navbar-brand img {
-    height: 40px;
-    margin: 0.5rem 2rem 0.5rem 1rem;
-}
-
-.barra-navegacao .nav-link {
-    color: white !important;
-    margin-right: 1rem;
-    transition: color 0.3s ease;
-}
-
-.barra-navegacao .nav-link:hover {
-    color: #cfcfcf !important;
-    text-decoration: underline;
-}
-
-.barra-navegacao .bt-login {
-    width: 8rem;
-    transition: background-color 0.3s ease, color 0.3s ease;
-    margin-right: 2rem;
-    color: white;
-    background-color: #77502e;
-}
-
-.barra-navegacao .bt-login:hover {
-    background-color: #7c5f45;
-}
-
-.navbar-toggler {
-    border: none;
-}
-
-.navbar-toggler-icon {
-    filter: invert(1);
 }
 
 .link-login {

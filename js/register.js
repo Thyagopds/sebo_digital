@@ -1,10 +1,13 @@
-document.addEventListener('DOMContentLoaded', function () {
+import { cadastrarUsuario } from './service/UserService.js';
+
+document.addEventListener('DOMContentLoaded', () => {
   const form = document.getElementById('form-cadastro');
   const sucesso = document.getElementById('mensagem-sucesso');
   const erro = document.getElementById('mensagem-erro');
 
-  form.addEventListener('submit', function (e) {
+  form.addEventListener('submit', async (e) => {
     e.preventDefault();
+
     sucesso.classList.add('d-none');
     erro.classList.add('d-none');
 
@@ -13,23 +16,21 @@ document.addEventListener('DOMContentLoaded', function () {
     const senha = form.senha.value;
     const confirmarSenha = form.confirmarsenha.value;
 
-    if (!form.checkValidity()) {
-      form.reportValidity();
-      return;
-    }
-
     if (senha !== confirmarSenha) {
+      erro.textContent = "As senhas não coincidem.";
       erro.classList.remove('d-none');
       return;
     }
 
-    console.log("Cadastro enviado:");
-    console.log("Nome:", nome);
-    console.log("Email:", email);
-    console.log("Senha: (oculta por segurança)");
+    const resultado = await cadastrarUsuario(nome, email, senha);
 
-    sucesso.classList.remove('d-none');
-    form.reset();
+    if (resultado.sucesso) {
+      sucesso.classList.remove('d-none');
+      form.reset();
+    } else {
+      erro.textContent = resultado.erro;
+      erro.classList.remove('d-none');
+    }
   });
 });
 
