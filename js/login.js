@@ -3,40 +3,76 @@ import { signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/9
 import { ref, get } from "https://www.gstatic.com/firebasejs/9.0.0/firebase-database.js";
 
 document.addEventListener('DOMContentLoaded', () => {
-  const form = document.querySelector('form');
-  const emailInput = document.getElementById('email');
-  const senhaInput = document.getElementById('senha');
-  const erro = document.getElementById('mensagem-erro');
+    const form = document.querySelector('form');
+    const emailInput = document.getElementById('email');
+    const senhaInput = document.getElementById('senha');
+    const erroDiv = document.getElementById('mensagem-erro');
 
-  form.addEventListener('submit', async (e) => {
-    e.preventDefault();
-    erro.classList.add('d-none');
+    const showErrorMessage = (message) => {
+        erroDiv.textContent = message;
+        erroDiv.classList.remove('d-none');
+        setTimeout(() => {
+            erroDiv.classList.add('d-none');
+            erroDiv.textContent = '';
+        }, 7000);
+    };
 
-    const email = emailInput.value.trim();
-    const senha = senhaInput.value;
+    form.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        erroDiv.classList.add('d-none');
 
-    try {
-      const cred = await signInWithEmailAndPassword(auth, email, senha);
-      const uid = cred.user.uid;
+        const email = emailInput.value.trim();
+        const senha = senhaInput.value;
 
-      const snapshot = await get(ref(db, 'usuarios/' + uid));
-      const dados = snapshot.val();
+        try {
+            const cred = await signInWithEmailAndPassword(auth, email, senha);
+            const uid = cred.user.uid;
 
-      if (!dados || !dados.role) {
-        throw new Error("Usuário sem role definida.");
-      }
+            const snapshot = await get(ref(db, 'usuarios/' + uid));
+            const dados = snapshot.val();
 
-      if (dados.role === 'admin') {
-        window.location.href = 'index_admin.html';
-      } else {
-        window.location.href = 'catalogo_livros.html';
-      }
+            if (!dados || !dados.role) {
+                await auth.signOut();
+                throw new Error("Sua conta não tem um perfil definido. Entre em contato com o suporte.");
+            }
 
-    } catch (err) {
-      erro.textContent = "Credenciais inválidas ou erro: " + err.message;
-      erro.classList.remove('d-none');
-    }
-  });
+            if (dados.role === 'admin') {
+                window.location.href = 'index_admin.html';
+            } else {
+                window.location.href = 'catalogo_livros.html';
+            }
+
+        } catch (err) {
+            let customMessage = "Ocorreu um erro desconhecido. Por favor, tente novamente mais tarde.";
+
+            switch (err.code) {
+                case 'auth/invalid-email':
+                    customMessage = "O formato do e-mail é inválido.";
+                    break;
+                case 'auth/user-disabled':
+                    customMessage = "Sua conta foi desativada. Por favor, entre em contato com o suporte.";
+                    break;
+                case 'auth/user-not-found':
+                case 'auth/wrong-password':
+                case 'auth/invalid-credential':
+                case 'auth/invalid-login-credentials':
+                    customMessage = "E-mail ou senha incorretos. Por favor, verifique suas credenciais.";
+                    break;
+                case 'auth/too-many-requests':
+                    customMessage = "Muitas tentativas de login falhas. Por favor, tente novamente em alguns minutos.";
+                    break;
+                default:
+                    if (err.message === "Sua conta não tem um perfil definido. Entre em contato com o suporte.") {
+                         customMessage = err.message;
+                    } else {
+                         customMessage = "Erro ao fazer login. Por favor, tente novamente.";
+                    }
+                    break;
+            }
+
+            showErrorMessage(customMessage);
+        }
+    });
 });
 
 function toggleSenha(idInput, btn) {
