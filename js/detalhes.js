@@ -1,11 +1,17 @@
 import { verificarAutenticacao } from './auth/verificaAutenticacao.js';
+import { db } from './firebaseConfig.js';
+import { ref, get } from 'https://www.gstatic.com/firebasejs/9.0.0/firebase-database.js';
 
-document.addEventListener('DOMContentLoaded', () => {
+async function carregarLivroFirebase(id) {
+    const snapshot = await get(ref(db, `livros/${id}`));
+    return snapshot.exists() ? snapshot.val() : null;
+  }
+
+document.addEventListener('DOMContentLoaded', async () => {
     const urlParams = new URLSearchParams(window.location.search);
     const bookId = urlParams.get('id');
 
-    const books = JSON.parse(localStorage.getItem('books')) || [];
-    const book = books.find(b => b.id == bookId);
+    const book = await carregarLivroFirebase(bookId);
 
     const errorMessage = document.getElementById('error-message');
     const bookDetails = document.getElementById('book-details');
