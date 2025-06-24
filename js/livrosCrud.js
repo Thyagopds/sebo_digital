@@ -67,6 +67,9 @@ document.addEventListener('DOMContentLoaded', () => {
   document.getElementById('addLivroForm').addEventListener('submit', function (event) {
     event.preventDefault();
 
+    const fileInput = document.getElementById('add-imagem');
+    const file = fileInput.files[0];
+
     const livro = {
       id: Date.now(),
       title: document.getElementById('add-titulo').value,
@@ -78,19 +81,28 @@ document.addEventListener('DOMContentLoaded', () => {
       image: '',
     };
 
-    // Adicionar ao LocalStorage
-    const books = JSON.parse(localStorage.getItem('books')) || [];
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = function (e) {
+        livro.image = e.target.result;
 
+        salvarLivro(livro);
+      };
+      reader.readAsDataURL(file);
+    } else {
+      salvarLivro(livro);
+    }
+  });
+
+  function salvarLivro(livro) {
+    const books = JSON.parse(localStorage.getItem('books')) || [];
     books.push(livro);
     localStorage.setItem('books', JSON.stringify(books));
 
-    // Atualizar a tabela
     renderBooks();
-
-    // Fechar o modal
     const modal = bootstrap.Modal.getInstance(document.getElementById('addLivroModal'));
     modal.hide();
-  });
+  }
 
   function atualizarTabelaLivros() {
     const books = JSON.parse(localStorage.getItem('books')) || [];
@@ -183,6 +195,18 @@ document.addEventListener('DOMContentLoaded', () => {
     modalEdit.hide();
     renderBooks();
   }
+
+  const addImageInput = document.getElementById('add-imagem');
+  const previewAddImagem = document.getElementById('preview-add-imagem');
+
+  addImageInput.addEventListener('change', () => {
+    const file = addImageInput.files[0];
+    if (file) {
+      previewAddImagem.src = URL.createObjectURL(file);
+    } else {
+      previewAddImagem.src = 'img/placeholder.jpg';
+    }
+  });
 
   renderBooks();
 });
