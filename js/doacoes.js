@@ -18,19 +18,24 @@ document.addEventListener('DOMContentLoaded', () => {
       return;
     }
 
-    await push(ref(db, 'doacoes'), {
-      titulo,
-      autor,
-      condicao,
-      observacoes,
-      status: 'pendente',
-      data: new Date().toISOString()
-    });
+    try {
+      await push(ref(db, 'doacoes'), {
+        titulo,
+        autor,
+        condicao,
+        observacoes,
+        status: 'pendente',
+        data: new Date().toISOString()
+      });
 
-    mensagem.classList.remove('d-none');
-    form.reset();
-    setTimeout(() => {
-      mensagem.classList.add('d-none');
-    }, 5000);
+      mensagem.classList.remove('d-none');
+      form.reset();
+      setTimeout(() => {
+        mensagem.classList.add('d-none');
+      }, 5000);
+    } catch (error) {
+      alert('Erro ao enviar doação: ' + error.message);
+      console.error(error);
+    }
   });
 });
