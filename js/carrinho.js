@@ -1,5 +1,5 @@
 import { db, auth } from './firebaseConfig.js';
-import { ref, push, set } from "https://www.gstatic.com/firebasejs/9.0.0/firebase-database.js";
+import { ref, push, set, get } from "https://www.gstatic.com/firebasejs/9.0.0/firebase-database.js";
 import { verificarAutenticacao } from './auth/verificaAutenticacao.js';
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -8,6 +8,18 @@ document.addEventListener('DOMContentLoaded', () => {
     const cartTotalElement = document.getElementById('cart-total');
     const finalizarBtn = document.querySelector('.btn-finalizar');
     const mensagemSucesso = document.getElementById('mensagem-sucesso');
+
+    async function carregarCarrinhoFirebase(uid) {
+      const snapshot = await get(ref(db, 'carrinhos/' + uid));
+      return snapshot.exists() ? snapshot.val() : [];
+    }
+
+    function salvarCarrinhoFirebase(uid, cart) {
+      return set(ref(db, 'carrinhos/' + uid), cart);
+    }
+
+    let cart = await carregarCarrinhoFirebase(user.uid);
+    localStorage.setItem('cart', JSON.stringify(cart));
 
     function formatPrice(price) {
       return `R$ ${parseFloat(price).toFixed(2).replace('.', ',')}`;
@@ -18,14 +30,13 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function renderCart() {
-      let cart = JSON.parse(localStorage.getItem('cart')) || [];
+      cart = JSON.parse(localStorage.getItem('cart')) || [];
       cartItemsContainer.innerHTML = '';
       const resumoElement = document.querySelector('.resumo-carrinho');
 
       if (cart.length === 0) {
         cartItemsContainer.innerHTML = '<div class="carrinho-vazio"><p class="text-center">Seu carrinho está vazio.</p></div>';
         cartTotalElement.textContent = formatPrice(0);
-
         cartItemsContainer.classList.remove('livro-carrinho', 'justify-content-between', 'col-md-7');
         if (resumoElement) resumoElement.style.display = 'none';
         return;
@@ -48,8 +59,8 @@ document.addEventListener('DOMContentLoaded', () => {
                 <label class="me-2 mb-0">Quantidade:</label>
                 <select class="form-select w-auto me-2" id="qty-${index}">
                   ${[...Array(10)].map((_, i) =>
-                    `<option value="${i + 1}" ${item.quantity === i + 1 ? 'selected' : ''}>${i + 1}</option>`
-                  ).join('')}
+          `<option value="${i + 1}" ${item.quantity === i + 1 ? 'selected' : ''}>${i + 1}</option>`
+        ).join('')}
                 </select>
                 <button class="btn btn-danger btn-remove" data-index="${index}">
                   <i class="bi bi-trash"></i>
@@ -60,19 +71,19 @@ document.addEventListener('DOMContentLoaded', () => {
         `;
         cartItemsContainer.appendChild(card);
 
-        // Atualizar quantidade no select
         card.querySelector('select').addEventListener('change', (e) => {
-          let cart = JSON.parse(localStorage.getItem('cart')) || [];
+          cart = JSON.parse(localStorage.getItem('cart')) || [];
           cart[index].quantity = parseInt(e.target.value);
           localStorage.setItem('cart', JSON.stringify(cart));
+          salvarCarrinhoFirebase(user.uid, cart);
           renderCart();
         });
 
-        // Remover item do carrinho
         card.querySelector('.btn-remove').addEventListener('click', () => {
-          let cart = JSON.parse(localStorage.getItem('cart')) || [];
+          cart = JSON.parse(localStorage.getItem('cart')) || [];
           cart.splice(index, 1);
           localStorage.setItem('cart', JSON.stringify(cart));
+          salvarCarrinhoFirebase(user.uid, cart);
           renderCart();
         });
       });
@@ -86,7 +97,7 @@ document.addEventListener('DOMContentLoaded', () => {
         return;
       }
 
-      let cart = JSON.parse(localStorage.getItem('cart')) || [];
+      cart = JSON.parse(localStorage.getItem('cart')) || [];
       if (cart.length === 0) {
         alert('Seu carrinho está vazio.');
         return;
@@ -116,6 +127,7 @@ document.addEventListener('DOMContentLoaded', () => {
       try {
         await set(novoPedidoRef, pedido);
         localStorage.removeItem('cart');
+        await salvarCarrinhoFirebase(user.uid, []);
         renderCart();
 
         mensagemSucesso.innerHTML = `<i class="bi bi-check-circle-fill me-2"></i>Compra finalizada com sucesso!<br>Código do pedido: <strong>${codigoPedido}</strong>`;
