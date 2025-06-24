@@ -61,6 +61,62 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
+
+
+
+  document.getElementById('addLivroForm').addEventListener('submit', function (event) {
+    event.preventDefault();
+
+    const livro = {
+      id: Date.now(),
+      title: document.getElementById('add-titulo').value,
+      author: document.getElementById('add-autor').value,
+      genre: document.getElementById('add-genero').value,
+      price: parseFloat(document.getElementById('add-preco').value).toFixed(2),
+      condition: document.getElementById('add-condicao').value,
+      description: document.getElementById('add-descricao').value,
+      image: '',
+    };
+
+    // Adicionar ao LocalStorage
+    const books = JSON.parse(localStorage.getItem('books')) || [];
+
+    books.push(livro);
+    localStorage.setItem('books', JSON.stringify(books));
+
+    // Atualizar a tabela
+    renderBooks();
+
+    // Fechar o modal
+    const modal = bootstrap.Modal.getInstance(document.getElementById('addLivroModal'));
+    modal.hide();
+  });
+
+  function atualizarTabelaLivros() {
+    const books = JSON.parse(localStorage.getItem('books')) || [];
+
+    const tbody = document.getElementById('livros-table-body');
+    tbody.innerHTML = ''; // Limpar tabela
+
+    livros.forEach((livro, index) => {
+      const row = document.createElement('tr');
+      row.innerHTML = `
+        <td>${index + 1}</td>
+        <td>${livro.titulo}</td>
+        <td>${livro.autor}</td>
+        <td>${livro.genero}</td>
+        <td>${livro.preco}</td>
+        <td>${livro.condicao}</td>
+        <td>
+          <button class="btn btn-sm btn-primary">Editar</button>
+          <button class="btn btn-sm btn-danger">Excluir</button>
+        </td>
+      `;
+      tbody.appendChild(row);
+    });
+  }
+
+
   function fillEditForm(book) {
     editForm['edit-index'].value = book.id;
     editForm['edit-titulo'].value = book.title;

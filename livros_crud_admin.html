@@ -30,7 +30,9 @@
     <h2 class="mb-4 text-center">Gerenciar Livros</h2>
     <div class="d-flex justify-content-between mb-4">
         <input type="text" id="searchInput" class="form-control w-50" placeholder="Pesquisar por título, autor ou gênero...">
-      <button class="btn btn-cadastrar" id="addLivroBtn"><i class="bi bi-plus-lg"></i> Adicionar Livro</button>
+        <button class="btn btn-cadastrar" id="addLivroBtn" data-bs-toggle="modal" data-bs-target="#addLivroModal">
+          <i class="bi bi-plus-lg"></i> Adicionar Livro
+        </button>
     </div>
     <div class="table-responsive">
       <table class="table livro-table table-hover">
@@ -51,6 +53,69 @@
       </table>
     </div>
   </main>
+
+<!-- Modal de Adicionar Livro -->
+<div class="modal fade" id="addLivroModal" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog modal-xl">
+    <div class="modal-content p-3">
+      <div class="modal-header border-0">
+        <h5 class="modal-title">Adicionar Livro</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+      <div class="modal-body d-flex gap-4">
+        <!-- preview imagem e input de arquivo -->
+        <div class="image-section text-center">
+          <label for="add-imagem" class="form-label fw-bold">Capa do Livro</label>
+          <img
+            id="preview-add-imagem"
+            src="${book.image || 'img/placeholder.jpg'}"
+            alt="Preview da capa"
+            class="img-preview mb-3"
+            style="max-width: 150px; max-height: 200px; width: 100%; object-fit: contain;"
+          />
+          <input type="file" class="form-control" id="add-imagem" accept="image/*" />
+        </div>
+
+        <!-- formulário lado a lado -->
+        <form id="addLivroForm" class="form-section flex-grow-1">
+          <div class="row g-3">
+            <div class="col-md-6">
+              <label for="add-titulo" class="form-label">Título</label>
+              <input type="text" class="form-control" id="add-titulo" required />
+            </div>
+            <div class="col-md-6">
+              <label for="add-autor" class="form-label">Autor</label>
+              <input type="text" class="form-control" id="add-autor" required />
+            </div>
+            <div class="col-md-6">
+              <label for="add-genero" class="form-label">Gênero</label>
+              <input type="text" class="form-control" id="add-genero" required />
+            </div>
+            <div class="col-md-6">
+              <label for="add-preco" class="form-label">Preço</label>
+              <input type="number" class="form-control" id="add-preco" step="0.01" required />
+            </div>
+            <div class="col-md-6">
+              <label for="add-condicao" class="form-label">Condição</label>
+              <input type="text" class="form-control" id="add-condicao" required />
+            </div>
+            <div class="col-12">
+              <label for="add-descricao" class="form-label">Descrição</label>
+              <textarea id="add-descricao" rows="4" class="form-control" required></textarea>
+            </div>
+          </div>
+
+          <div class="d-flex justify-content-end mt-4 gap-2">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+            <button type="submit" class="btn btn-primary">Adicionar</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+
 
   <!-- Modal de Edição -->
 <div class="modal fade" id="editLivroModal" tabindex="-1" aria-hidden="true">
