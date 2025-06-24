@@ -1,8 +1,32 @@
 import { ensureAdminAccess } from './auth/authGuard.js';
+import { db } from './firebaseConfig.js';
+import { ref, get, set, update, remove } from 'https://www.gstatic.com/firebasejs/9.0.0/firebase-database.js';
+
+async function salvarLivroFirebase(livro) {
+  const livroRef = ref(db, `livros/${livro.id}`);
+  await set(livroRef, livro);
+  const modal = bootstrap.Modal.getInstance(document.getElementById('addLivroModal'));
+  modal.hide();
+}
+
+async function carregarLivrosFirebase() {
+  const snapshot = await get(ref(db, 'livros'));
+  return snapshot.exists() ? Object.values(snapshot.val()) : [];
+}
+
+async function atualizarLivroFirebase(livro) {
+  const livroRef = ref(db, `livros/${livro.id}`);
+  await update(livroRef, livro);
+}
+
+async function excluirLivroFirebase(id) {
+  const livroRef = ref(db, `livros/${id}`);
+  await remove(livroRef);
+}
 
 ensureAdminAccess(); // Verifica e redireciona se não for admin
 
-document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener('DOMContentLoaded', async () => {
   const tableBody = document.getElementById('livros-table-body');
   const modalConfirm = new bootstrap.Modal(document.getElementById('confirmDeleteModal'));
   const modalEdit = new bootstrap.Modal(document.getElementById('editLivroModal'));
@@ -12,10 +36,12 @@ document.addEventListener('DOMContentLoaded', () => {
   const previewImagem = document.getElementById('preview-imagem');
 
   let bookIdToDelete = null;
-  let books = JSON.parse(localStorage.getItem('books')) || [];
+  //let books = JSON.parse(localStorage.getItem('books')) || [];
+  let books = await carregarLivrosFirebase();
 
-  function renderBooks() {
-    books = JSON.parse(localStorage.getItem('books')) || [];
+  async function renderBooks() {
+    // books = JSON.parse(localStorage.getItem('books')) || [];
+    let books = await carregarLivrosFirebase();
     tableBody.innerHTML = '';
 
     if (books.length === 0) {
@@ -61,10 +87,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-
-
-
-  document.getElementById('addLivroForm').addEventListener('submit', function (event) {
+  document.getElementById('addLivroForm').addEventListener('submit', async function (event) {
     event.preventDefault();
 
     const fileInput = document.getElementById('add-imagem');
@@ -83,14 +106,18 @@ document.addEventListener('DOMContentLoaded', () => {
 
     if (file) {
       const reader = new FileReader();
-      reader.onload = function (e) {
+      reader.onload = async function (e) {
         livro.image = e.target.result;
 
-        salvarLivro(livro);
+        //salvarLivro(livro);
+        await salvarLivroFirebase(livro);
+        renderBooks();
       };
       reader.readAsDataURL(file);
     } else {
-      salvarLivro(livro);
+      // salvarLivro(livro);
+      await salvarLivroFirebase(livro);
+      renderBooks();
     }
   });
 
@@ -155,16 +182,19 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   });
 
-  confirmDeleteBtn.addEventListener('click', () => {
+  confirmDeleteBtn.addEventListener('click', async () => {
     if (!bookIdToDelete) return;
     books = books.filter(b => b.id != bookIdToDelete);
-    localStorage.setItem('books', JSON.stringify(books));
+    // localStorage.setItem('books', JSON.stringify(books));
+    await excluirLivroFirebase(bookIdToDelete);
     modalConfirm.hide();
     renderBooks();
   });
 
-  editForm.addEventListener('submit', (e) => {
+  editForm.addEventListener('submit', async (e) => {
     e.preventDefault();
+
+    books = await carregarLivrosFirebase();
 
     const updatedBook = {
       id: Number(editForm['edit-index'].value),
@@ -189,9 +219,10 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   });
 
-  function saveUpdatedBook(updatedBook) {
-    books = books.map(b => b.id == updatedBook.id ? updatedBook : b);
-    localStorage.setItem('books', JSON.stringify(books));
+  async function saveUpdatedBook(updatedBook) {
+    //books = books.map(b => b.id == updatedBook.id ? updatedBook : b);
+    //localStorage.setItem('books', JSON.stringify(books));
+    await atualizarLivroFirebase(updatedBook);
     modalEdit.hide();
     renderBooks();
   }
