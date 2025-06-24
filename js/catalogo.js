@@ -1,12 +1,20 @@
-document.addEventListener('DOMContentLoaded', () => {
+import { db } from './firebaseConfig.js';
+import { ref, get } from 'https://www.gstatic.com/firebasejs/9.0.0/firebase-database.js';
+
+async function carregarLivrosFirebase() {
+    const snapshot = await get(ref(db, 'livros'));
+    return snapshot.exists() ? Object.values(snapshot.val()) : [];
+}
+
+document.addEventListener('DOMContentLoaded', async () => {
     const booksContainer = document.querySelector('#booksContainer');
     const searchInput = document.querySelector('#searchInput');
     const sortSelect = document.querySelector('#sortSelect');
     const genreSelect = document.querySelector('#genreSelect');
     const stateSelect = document.querySelector('#stateSelect');
 
-    function loadBooks() {
-        let books = JSON.parse(localStorage.getItem('books')) || [];
+    async function loadBooks() {
+        let books = await carregarLivrosFirebase();
 
         const searchTerm = searchInput.value.trim().toLowerCase();
         const sortBy = sortSelect.value;
@@ -65,10 +73,10 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    loadBooks();
+    await loadBooks();
 
-    searchInput.addEventListener('input', loadBooks);
-    sortSelect.addEventListener('change', loadBooks);
-    genreSelect.addEventListener('change', loadBooks);
-    stateSelect.addEventListener('change', loadBooks);
+    searchInput.addEventListener('input', async () => await loadBooks());
+    sortSelect.addEventListener('change', async () => await loadBooks());
+    genreSelect.addEventListener('change', async () => await loadBooks());
+    stateSelect.addEventListener('change', async () => await loadBooks());
 });
