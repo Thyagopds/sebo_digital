@@ -1,5 +1,3 @@
-/* css/user_list.css */
-
 .user-table {
   background-color: #fff;
   border-radius: 10px;
@@ -30,21 +28,18 @@
 .user-table tbody tr:hover {
   background-color: #ffeccc;
 }
-/* Define largura maior para modal */
 .modal-lg {
   max-width: 900px;
 }
 
-/* Seção da imagem */
 .image-section {
   min-width: 180px;
-max-width: 180px; /* força a largura máxima */
+  max-width: 180px;
   display: flex;
   flex-direction: column;
   align-items: center;
 }
 
-/* Preview da imagem */
 .img-preview {
   width: 150px !important;
   height: 200px !important;
@@ -56,29 +51,22 @@ max-width: 180px; /* força a largura máxima */
   margin-bottom: 0.5rem;
 }
 
-/* Espaçamento e responsividade do form */
 .form-section .row > div {
-  /* opcional: deixa campos com espaçamento */
-  /* Já temos g-3 no row do bootstrap, que faz isso */
 }
 
-/* Modal padding e sombra mais leve */
 .modal-content {
   border-radius: 12px;
   box-shadow: 0 10px 30px rgba(0,0,0,0.15);
 }
 
-/* Título mais clean */
 .modal-header {
   border-bottom: none;
 }
 
-/* Botões com espaçamento */
 .modal-footer {
   border-top: none;
 }
 
-/* Responsividade para telas menores */
 @media (max-width: 768px) {
   .modal-body {
     flex-direction: column;
@@ -104,4 +92,24 @@ max-width: 180px; /* força a largura máxima */
 }
 .bi-plus-lg {
   margin-right: 10px;
+}
+
+html, body {
+  height: 100%;
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+main {
+  flex: 1 0 auto;
+  margin-bottom: 0;
+  padding-bottom: 0;
+}
+
+footer {
+  flex-shrink: 0;
 }
