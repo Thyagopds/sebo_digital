@@ -47,7 +47,9 @@ export function loadHeader() {
       <a class="link-login position-relative" href="carrinho.html" title="Carrinho">
         <button class="btn p-0 border-0 bg-transparent">
           <i class="bi bi-cart3 fs-4 text-white"></i>
-          <span id="cart-badge" class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger d-none" style="font-size:0.8rem;">
+          <span id="cart-badge" 
+          class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger d-none" 
+          style="font-size:0.8rem; left:70%; top:10%;">
             0
           </span>
         </button>
