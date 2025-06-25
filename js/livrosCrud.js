@@ -1,243 +1,223 @@
 import { ensureAdminAccess } from './auth/authGuard.js';
 import { db } from './firebaseConfig.js';
-import { ref, get, set, update, remove } from 'https://www.gstatic.com/firebasejs/9.0.0/firebase-database.js';
+import { ref, get, set, update, remove, push } from 'https://www.gstatic.com/firebasejs/9.0.0/firebase-database.js';
 
-async function salvarLivroFirebase(livro) {
-  const livroRef = ref(db, `livros/${livro.id}`);
-  await set(livroRef, livro);
-  const modal = bootstrap.Modal.getInstance(document.getElementById('addLivroModal'));
-  modal.hide();
+async function addLivroFirebase(livroData) {
+    const newLivroRef = push(ref(db, 'livros'));
+    livroData.id = newLivroRef.key;
+    await set(newLivroRef, livroData);
+    const modal = bootstrap.Modal.getInstance(document.getElementById('addLivroModal'));
+    modal.hide();
 }
 
 async function carregarLivrosFirebase() {
-  const snapshot = await get(ref(db, 'livros'));
-  return snapshot.exists() ? Object.values(snapshot.val()) : [];
+    const snapshot = await get(ref(db, 'livros'));
+    const livrosData = snapshot.exists() ? snapshot.val() : {};
+    
+    return Object.keys(livrosData).map(key => {
+        const livro = livrosData[key];
+        return {
+            id: key,
+            title: livro.title || 'Título Desconhecido',
+            author: livro.author || 'Autor Desconhecido',
+            genre: livro.genre || 'Gênero Não Informado',
+            price: livro.price || null,
+            condition: livro.condition || 'Não informado',
+            description: livro.description || '',
+            image: livro.image || 'img/placeholder.jpg',
+            origin: livro.origin || null,
+            date: livro.date || null
+        };
+    });
 }
 
 async function atualizarLivroFirebase(livro) {
-  const livroRef = ref(db, `livros/${livro.id}`);
-  await update(livroRef, livro);
+    const livroRef = ref(db, `livros/${livro.id}`);
+    await update(livroRef, livro);
 }
 
 async function excluirLivroFirebase(id) {
-  const livroRef = ref(db, `livros/${id}`);
-  await remove(livroRef);
+    const livroRef = ref(db, `livros/${id}`);
+    await remove(livroRef);
 }
 
-ensureAdminAccess(); // Verifica e redireciona se não for admin
+ensureAdminAccess();
 
 document.addEventListener('DOMContentLoaded', async () => {
-  const tableBody = document.getElementById('livros-table-body');
-  const modalConfirm = new bootstrap.Modal(document.getElementById('confirmDeleteModal'));
-  const modalEdit = new bootstrap.Modal(document.getElementById('editLivroModal'));
-  const confirmDeleteBtn = document.getElementById('confirmDeleteBtn');
-  const editForm = document.getElementById('editLivroForm');
-  const imageInput = document.getElementById('edit-imagem');
-  const previewImagem = document.getElementById('preview-imagem');
+    const tableBody = document.getElementById('livros-table-body');
+    const modalConfirm = new bootstrap.Modal(document.getElementById('confirmDeleteModal'));
+    const modalEdit = new bootstrap.Modal(document.getElementById('editLivroModal'));
+    const confirmDeleteBtn = document.getElementById('confirmDeleteBtn');
+    const editForm = document.getElementById('editLivroForm');
+    const imageInput = document.getElementById('edit-imagem');
+    const previewImagem = document.getElementById('preview-imagem');
 
-  let bookIdToDelete = null;
-  //let books = JSON.parse(localStorage.getItem('books')) || [];
-  let books = await carregarLivrosFirebase();
+    let bookIdToDelete = null;
+    let booksCache = [];
 
-  async function renderBooks() {
-    // books = JSON.parse(localStorage.getItem('books')) || [];
-    let books = await carregarLivrosFirebase();
-    tableBody.innerHTML = '';
+    async function renderBooks() {
+        booksCache = await carregarLivrosFirebase();
+        tableBody.innerHTML = '';
 
-    if (books.length === 0) {
-      tableBody.innerHTML = '<tr><td colspan="7" class="text-center">Nenhum livro cadastrado.</td></tr>';
-      return;
-    }
-
-    books.forEach(book => {
-      const tr = document.createElement('tr');
-      tr.innerHTML = `
-        <td><img src="${book.image || 'img/placeholder.jpg'}" alt="${book.title}" width="50"></td>
-        <td>${book.title}</td>
-        <td>${book.author}</td>
-        <td>${book.genre}</td>
-        <td>R$ ${book.price}</td>
-        <td>${book.condition}</td>
-        <td>
-          <div class="table-actions">
-            <button class="btn btn-edit" data-id="${book.id}"><i class="bi bi-pencil"></i></button>
-            <button class="btn btn-delete" data-id="${book.id}"><i class="bi bi-trash"></i></button>
-          </div>
-        </td>
-      `;
-      tableBody.appendChild(tr);
-    });
-
-    document.querySelectorAll('.btn-delete').forEach(btn => {
-      btn.addEventListener('click', () => {
-        bookIdToDelete = btn.dataset.id;
-        modalConfirm.show();
-      });
-    });
-
-    document.querySelectorAll('.btn-edit').forEach(btn => {
-      btn.addEventListener('click', () => {
-        const id = btn.dataset.id;
-        const book = books.find(b => b.id == id);
-        if (book) {
-          fillEditForm(book);
-          modalEdit.show();
+        if (booksCache.length === 0) {
+            tableBody.innerHTML = '<tr><td colspan="7" class="text-center">Nenhum livro cadastrado.</td></tr>';
+            return;
         }
-      });
+
+        booksCache.forEach(book => {
+            const tr = document.createElement('tr');
+            const priceToDisplay = typeof book.price === 'number' ? `R$ ${book.price.toFixed(2)}` : 'R$ Grátis';
+            tr.innerHTML = `
+                <td><img src="${book.image}" alt="${book.title}" width="50"></td>
+                <td>${book.title}</td>
+                <td>${book.author}</td>
+                <td>${book.genre || 'Não informado'}</td>
+                <td>${priceToDisplay}</td>
+                <td>${book.condition}</td>
+                <td>
+                    <div class="table-actions">
+                        <button class="btn btn-edit" data-id="${book.id}"><i class="bi bi-pencil"></i></button>
+                        <button class="btn btn-delete" data-id="${book.id}"><i class="bi bi-trash"></i></button>
+                    </div>
+                </td>
+            `;
+            tableBody.appendChild(tr);
+        });
+
+        document.querySelectorAll('.btn-delete').forEach(btn => {
+            btn.addEventListener('click', () => {
+                bookIdToDelete = btn.dataset.id;
+                modalConfirm.show();
+            });
+        });
+
+        document.querySelectorAll('.btn-edit').forEach(btn => {
+            btn.addEventListener('click', () => {
+                const id = btn.dataset.id;
+                const book = booksCache.find(b => b.id === id);
+                if (book) {
+                    fillEditForm(book);
+                    modalEdit.show();
+                }
+            });
+        });
+    }
+
+    document.getElementById('addLivroForm').addEventListener('submit', async function (event) {
+        event.preventDefault();
+
+        const fileInput = document.getElementById('add-imagem');
+        const file = fileInput.files[0];
+
+        const newBookData = {
+            title: document.getElementById('add-titulo').value.trim(),
+            author: document.getElementById('add-autor').value.trim(),
+            genre: document.getElementById('add-genero').value.trim(),
+            price: parseFloat(document.getElementById('add-preco').value), 
+            condition: document.getElementById('add-condicao').value.trim(),
+            description: document.getElementById('add-descricao').value.trim(),
+            image: '',
+            origin: 'manual',
+            date: new Date().toISOString()
+        };
+
+        if (file) {
+            const reader = new FileReader();
+            reader.onload = async function (e) {
+                newBookData.image = e.target.result;
+                await addLivroFirebase(newBookData);
+                renderBooks();
+                document.getElementById('addLivroForm').reset();
+                document.getElementById('preview-add-imagem').src = 'img/placeholder.jpg';
+            };
+            reader.readAsDataURL(file);
+        } else {
+            newBookData.image = 'img/placeholder.jpg';
+            await addLivroFirebase(newBookData);
+            renderBooks();
+            document.getElementById('addLivroForm').reset();
+            document.getElementById('preview-add-imagem').src = 'img/placeholder.jpg';
+        }
     });
-  }
 
-  document.getElementById('addLivroForm').addEventListener('submit', async function (event) {
-    event.preventDefault();
+    function fillEditForm(book) {
+        editForm['edit-index'].value = book.id; 
+        editForm['edit-titulo'].value = book.title;
+        editForm['edit-autor'].value = book.author;
+        editForm['edit-genero'].value = book.genre;
+        editForm['edit-preco'].value = book.price;
+        editForm['edit-condicao'].value = book.condition;
+        editForm['edit-descricao'].value = book.description;
+        previewImagem.src = book.image;
+        imageInput.value = '';
+    }
 
-    const fileInput = document.getElementById('add-imagem');
-    const file = fileInput.files[0];
+    imageInput.addEventListener('change', () => {
+        const file = imageInput.files[0];
+        if (file) {
+            previewImagem.src = URL.createObjectURL(file);
+        } else {
+            const id = editForm['edit-index'].value;
+            const book = booksCache.find(b => b.id === id);
+            previewImagem.src = book?.image || 'img/placeholder.jpg';
+        }
+    });
 
-    const livro = {
-      id: Date.now(),
-      title: document.getElementById('add-titulo').value,
-      author: document.getElementById('add-autor').value,
-      genre: document.getElementById('add-genero').value,
-      price: parseFloat(document.getElementById('add-preco').value).toFixed(2),
-      condition: document.getElementById('add-condicao').value,
-      description: document.getElementById('add-descricao').value,
-      image: '',
-    };
-
-    if (file) {
-      const reader = new FileReader();
-      reader.onload = async function (e) {
-        livro.image = e.target.result;
-
-        //salvarLivro(livro);
-        await salvarLivroFirebase(livro);
+    confirmDeleteBtn.addEventListener('click', async () => {
+        if (!bookIdToDelete) return;
+        await excluirLivroFirebase(bookIdToDelete);
+        modalConfirm.hide();
         renderBooks();
-      };
-      reader.readAsDataURL(file);
-    } else {
-      // salvarLivro(livro);
-      await salvarLivroFirebase(livro);
-      renderBooks();
-    }
-  });
-
-  function salvarLivro(livro) {
-    const books = JSON.parse(localStorage.getItem('books')) || [];
-    books.push(livro);
-    localStorage.setItem('books', JSON.stringify(books));
-
-    renderBooks();
-    const modal = bootstrap.Modal.getInstance(document.getElementById('addLivroModal'));
-    modal.hide();
-  }
-
-  function atualizarTabelaLivros() {
-    const books = JSON.parse(localStorage.getItem('books')) || [];
-
-    const tbody = document.getElementById('livros-table-body');
-    tbody.innerHTML = ''; // Limpar tabela
-
-    livros.forEach((livro, index) => {
-      const row = document.createElement('tr');
-      row.innerHTML = `
-        <td>${index + 1}</td>
-        <td>${livro.titulo}</td>
-        <td>${livro.autor}</td>
-        <td>${livro.genero}</td>
-        <td>${livro.preco}</td>
-        <td>${livro.condicao}</td>
-        <td>
-          <button class="btn btn-sm btn-primary">Editar</button>
-          <button class="btn btn-sm btn-danger">Excluir</button>
-        </td>
-      `;
-      tbody.appendChild(row);
     });
-  }
 
+    editForm.addEventListener('submit', async (e) => {
+        e.preventDefault();
 
-  function fillEditForm(book) {
-    editForm['edit-index'].value = book.id;
-    editForm['edit-titulo'].value = book.title;
-    editForm['edit-autor'].value = book.author;
-    editForm['edit-genero'].value = book.genre;
-    editForm['edit-preco'].value = book.price;
-    editForm['edit-condicao'].value = book.condition;
-    editForm['edit-descricao'].value = book.description || '';
+        const bookId = editForm['edit-index'].value;
+        const currentBook = booksCache.find(b => b.id === bookId);
 
-    previewImagem.src = book.image || 'img/placeholder.jpg';
-    imageInput.value = ''; // limpa o input para nova seleção
-  }
+        const updatedBookData = {
+            id: bookId,
+            title: editForm['edit-titulo'].value.trim(),
+            author: editForm['edit-autor'].value.trim(),
+            genre: editForm['edit-genero'].value.trim(),
+            price: parseFloat(editForm['edit-preco'].value),
+            condition: editForm['edit-condicao'].value.trim(),
+            description: editForm['edit-descricao'].value.trim(),
+            image: currentBook.image || 'img/placeholder.jpg', 
+            origin: currentBook.origin || null,
+            date: currentBook.date || null
+        };
 
-  // Atualiza preview da imagem ao escolher novo arquivo
-  imageInput.addEventListener('change', () => {
-    const file = imageInput.files[0];
-    if (file) {
-      previewImagem.src = URL.createObjectURL(file);
-    } else {
-      // Se remover o arquivo, volta para a imagem original do livro
-      const id = editForm['edit-index'].value;
-      const book = books.find(b => b.id == id);
-      previewImagem.src = book?.image || 'img/placeholder.jpg';
+        if (imageInput.files.length > 0) {
+            const reader = new FileReader();
+            reader.onload = (event) => {
+                updatedBookData.image = event.target.result;
+                saveUpdatedBook(updatedBookData);
+            };
+            reader.readAsDataURL(imageInput.files[0]);
+        } else {
+            saveUpdatedBook(updatedBookData);
+        }
+    });
+
+    async function saveUpdatedBook(updatedBook) {
+        await atualizarLivroFirebase(updatedBook);
+        modalEdit.hide();
+        renderBooks();
     }
-  });
 
-  confirmDeleteBtn.addEventListener('click', async () => {
-    if (!bookIdToDelete) return;
-    books = books.filter(b => b.id != bookIdToDelete);
-    // localStorage.setItem('books', JSON.stringify(books));
-    await excluirLivroFirebase(bookIdToDelete);
-    modalConfirm.hide();
+    const addImageInput = document.getElementById('add-imagem');
+    const previewAddImagem = document.getElementById('preview-add-imagem');
+
+    addImageInput.addEventListener('change', () => {
+        const file = addImageInput.files[0];
+        if (file) {
+            previewAddImagem.src = URL.createObjectURL(file);
+        } else {
+            previewAddImagem.src = 'img/placeholder.jpg';
+        }
+    });
+
     renderBooks();
-  });
-
-  editForm.addEventListener('submit', async (e) => {
-    e.preventDefault();
-
-    books = await carregarLivrosFirebase();
-
-    const updatedBook = {
-      id: Number(editForm['edit-index'].value),
-      title: editForm['edit-titulo'].value,
-      author: editForm['edit-autor'].value,
-      genre: editForm['edit-genero'].value,
-      price: Number(editForm['edit-preco'].value).toFixed(2),
-      condition: editForm['edit-condicao'].value,
-      description: editForm['edit-descricao'].value,
-      image: books.find(b => b.id == editForm['edit-index'].value)?.image || ''
-    };
-
-    if (imageInput.files.length > 0) {
-      const reader = new FileReader();
-      reader.onload = (event) => {
-        updatedBook.image = event.target.result; // base64 da nova imagem
-        saveUpdatedBook(updatedBook);
-      };
-      reader.readAsDataURL(imageInput.files[0]);
-    } else {
-      saveUpdatedBook(updatedBook);
-    }
-  });
-
-  async function saveUpdatedBook(updatedBook) {
-    //books = books.map(b => b.id == updatedBook.id ? updatedBook : b);
-    //localStorage.setItem('books', JSON.stringify(books));
-    await atualizarLivroFirebase(updatedBook);
-    modalEdit.hide();
-    renderBooks();
-  }
-
-  const addImageInput = document.getElementById('add-imagem');
-  const previewAddImagem = document.getElementById('preview-add-imagem');
-
-  addImageInput.addEventListener('change', () => {
-    const file = addImageInput.files[0];
-    if (file) {
-      previewAddImagem.src = URL.createObjectURL(file);
-    } else {
-      previewAddImagem.src = 'img/placeholder.jpg';
-    }
-  });
-
-  renderBooks();
 });

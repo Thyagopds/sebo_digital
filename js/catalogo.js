@@ -9,13 +9,13 @@ async function carregarLivrosFirebase() {
         const livro = livrosData[key];
         return {
             id: key,
-            titulo: livro.titulo || 'Título Desconhecido',
-            autor: livro.autor || 'Autor Desconhecido',
-            condicao: livro.condicao || 'Não informado',
-            observacoes: livro.observacoes || '',
-            imagem: livro.imagem || 'img/placeholder.jpg',
-            genero: livro.genero || null,
-            preco: livro.preco || null
+            title: livro.title || 'Título Desconhecido',
+            author: livro.author || 'Autor Desconhecido',
+            condition: livro.condition || 'Não informado',
+            description: livro.description || 'Nenhuma descrição disponível.',
+            image: livro.image || 'img/placeholder.jpg',
+            genre: livro.genre || 'Gênero Não Informado',
+            price: livro.price || null
         };
     });
 }
@@ -32,32 +32,32 @@ document.addEventListener('DOMContentLoaded', async () => {
 
         const searchTerm = searchInput.value.trim().toLowerCase();
         const sortBy = sortSelect.value;
-        const selectedGenre = genreSelect ? genreSelect.value : '';
-        const selectedState = stateSelect ? stateSelect.value : '';
+        const selectedGenre = genreSelect ? genreSelect.value.toLowerCase() : '';
+        const selectedState = stateSelect ? stateSelect.value.toLowerCase() : '';
 
         if (searchTerm) {
             books = books.filter(book =>
-                book.titulo.toLowerCase().includes(searchTerm) ||
-                book.autor.toLowerCase().includes(searchTerm)
+                book.title.toLowerCase().includes(searchTerm) ||
+                book.author.toLowerCase().includes(searchTerm)
             );
         }
 
         if (selectedGenre) {
-            books = books.filter(book => book.genero && book.genero.toLowerCase() === selectedGenre.toLowerCase());
+            books = books.filter(book => String(book.genre).toLowerCase() === selectedGenre);
         }
 
         if (selectedState) {
-            books = books.filter(book => book.condicao.toLowerCase() === selectedState.toLowerCase());
+            books = books.filter(book => String(book.condition).toLowerCase() === selectedState);
         }
 
         if (sortBy === 'nome-asc') {
-            books.sort((a, b) => a.titulo.localeCompare(b.titulo));
+            books.sort((a, b) => a.title.localeCompare(b.title));
         } else if (sortBy === 'nome-desc') {
-            books.sort((a, b) => b.titulo.localeCompare(a.titulo));
+            books.sort((a, b) => b.title.localeCompare(a.title));
         } else if (sortBy === 'preco-asc') {
-            books.sort((a, b) => (a.preco || 0) - (b.preco || 0));
+            books.sort((a, b) => (parseFloat(a.price) || 0) - (parseFloat(b.price) || 0));
         } else if (sortBy === 'preco-desc') {
-            books.sort((a, b) => (b.preco || 0) - (a.preco || 0));
+            books.sort((a, b) => (parseFloat(b.price) || 0) - (parseFloat(a.price) || 0));
         }
 
         booksContainer.innerHTML = '';
@@ -68,26 +68,26 @@ document.addEventListener('DOMContentLoaded', async () => {
         }
 
         books.forEach(book => {
-            const tituloExibicao = book.titulo;
-            const autorExibicao = book.autor;
-            const generoExibicao = book.genero || 'Gênero Não Informado';
-            const precoExibicao = typeof book.preco === 'number' ? `R$ ${book.preco.toFixed(2)}` : 'R$ Grátis';
-            const imagemExibicao = book.imagem;
+            const titleToDisplay = book.title;
+            const authorToDisplay = book.author;
+            const genreToDisplay = book.genre;
+            const priceToDisplay = typeof book.price === 'number' ? `R$ ${book.price.toFixed(2)}` : 'R$ Grátis';
+            const imageToDisplay = book.image;
 
             const bookCard = `
                 <div class="col mt-3">
                     <a href="detalhes.html?id=${book.id}" class="text-decoration-none text-dark">
                         <div class="card h-100 shadow-sm livro-card">
                             <div class="d-flex justify-content-center img-livro-card">
-                                <img src="${imagemExibicao}" class="card-img-top livro-img rounded" alt="${tituloExibicao}">
+                                <img src="${imageToDisplay}" class="card-img-top livro-img rounded" alt="${titleToDisplay}">
                             </div>
                             <div class="card-body d-flex flex-column">
                                 <div class="p-2">
-                                    <h5 class="card-title m-0 p-0 truncate-one-line">${tituloExibicao}</h5>
-                                    <p class="card-text mb-1"><strong>Autor:</strong> ${autorExibicao}</p>
-                                    <p class="card-text mb-2"><strong>Gênero:</strong> ${generoExibicao}</p>
+                                    <h5 class="card-title m-0 p-0 truncate-one-line">${titleToDisplay}</h5>
+                                    <p class="card-text mb-1"><strong>Autor:</strong> ${authorToDisplay}</p>
+                                    <p class="card-text mb-2"><strong>Gênero:</strong> ${genreToDisplay}</p>
                                 </div>
-                                <div class="livro-preco mt-auto">${precoExibicao}</div>
+                                <div class="livro-preco mt-auto">${priceToDisplay}</div>
                             </div>
                         </div>
                     </a>
