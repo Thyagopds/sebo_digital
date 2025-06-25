@@ -1,26 +1,31 @@
-/* Reset básico e corpo */
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
 
+html, body {
+  height: 100%;
+}
+
 body {
   font-family: sans-serif;
   background-color: #f6f0e6;
   color: #333;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
 }
 
-/* Container principal */
 main {
   width: 90%;
   margin: 0 auto;
   padding: 80px 20px 0 20px;
   margin-top: 80px;
   min-height: 90vh;
+  flex: 1 0 auto;
 }
 
-/* Título */
 h2.titulo {
   font-size: 2rem;
   text-align: center;
@@ -28,7 +33,6 @@ h2.titulo {
   color: #5D4E3C;
 }
 
-/* Estilização dos cards */
 .card {
   background-color: white;
   border-radius: 12px;
@@ -56,12 +60,10 @@ h2.titulo {
   color: #77502e;
 }
 
-/* Links dos cards */
 a.text-decoration-none {
   text-decoration: none !important;
 }
 
-/* Rodapé */
 footer {
   background-color: #4c3928;
   height: 5rem;
@@ -72,6 +74,7 @@ footer {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  flex-shrink: 0;
 }
 
 footer p {
