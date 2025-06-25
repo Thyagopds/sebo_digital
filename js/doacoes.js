@@ -1,3 +1,6 @@
+import { db } from './firebaseConfig.js';
+import { ref, push } from 'https://www.gstatic.com/firebasejs/9.0.0/firebase-database.js';
+
 const mensagem = document.getElementById('mensagem-doacao');
 const form = document.getElementById('doacao-form');
 
