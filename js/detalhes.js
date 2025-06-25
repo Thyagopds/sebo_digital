@@ -1,16 +1,15 @@
 import { verificarAutenticacao } from './auth/verificaAutenticacao.js';
 import { db } from './firebaseConfig.js';
-import { ref, get } from 'https://www.gstatic.com/firebasejs/9.0.0/firebase-database.js';
+import { ref, get, set } from 'https://www.gstatic.com/firebasejs/9.0.0/firebase-database.js';
 
 async function carregarLivroFirebase(id) {
     const snapshot = await get(ref(db, `livros/${id}`));
     return snapshot.exists() ? snapshot.val() : null;
-  }
+}
 
 document.addEventListener('DOMContentLoaded', async () => {
     const urlParams = new URLSearchParams(window.location.search);
     const bookId = urlParams.get('id');
-
     const book = await carregarLivroFirebase(bookId);
 
     const errorMessage = document.getElementById('error-message');
@@ -45,29 +44,32 @@ document.addEventListener('DOMContentLoaded', async () => {
     const comprarBtn = document.querySelector('.comprar-btn');
     
     comprarBtn.addEventListener('click', () => {
-        verificarAutenticacao(() => {
-        const cart = JSON.parse(localStorage.getItem('cart')) || [];
+        verificarAutenticacao(async (user) => {
+            let cart = JSON.parse(localStorage.getItem('cart')) || [];
 
-        const existing = cart.find(item => item.id === book.id);
-        if (existing) {
-            existing.quantity += 1;
-        } else {
-            cart.push({
-            id: book.id,
-            title: book.title,
-            price: book.price,
-            image: book.image || '../img/placeholder.jpg',
-            quantity: 1
-            });
-        }
+            const existing = cart.find(item => item.id === book.id);
+            if (existing) {
+                existing.quantity += 1;
+            } else {
+                cart.push({
+                    id: book.id,
+                    title: book.title,
+                    price: book.price,
+                    image: book.image || '../img/placeholder.jpg',
+                    quantity: 1
+                });
+            }
 
-        localStorage.setItem('cart', JSON.stringify(cart));
-        const mensagem = document.getElementById('mensagem-sucesso');
-        mensagem.classList.remove('d-none');
+            localStorage.setItem('cart', JSON.stringify(cart));
 
-        setTimeout(() => {
-            mensagem.classList.add('d-none');
-        }, 5000);
+            // Salva o carrinho no Firebase
+            await set(ref(db, 'carrinhos/' + user.uid), cart);
+
+            const mensagem = document.getElementById('mensagem-sucesso');
+            mensagem.classList.remove('d-none');
+            setTimeout(() => {
+                mensagem.classList.add('d-none');
+            }, 5000);
         });
     });
-    });
+});
