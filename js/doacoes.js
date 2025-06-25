@@ -1,3 +1,6 @@
+const mensagem = document.getElementById('mensagem-doacao');
+const form = document.getElementById('doacao-form');
+
 form.addEventListener('submit', async (e) => {
   e.preventDefault();
 
