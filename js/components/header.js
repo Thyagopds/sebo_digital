@@ -18,7 +18,6 @@ export function loadHeader() {
       }
     }
 
-    // Ícones do usuário logado ou visitante
     const userSectionHTML = user
       ? `
         <div class="dropdown" style="margin-right: 2.4rem;">
@@ -43,11 +42,14 @@ export function loadHeader() {
         </a>
       `;
 
-    // Ícones de navegação padrão + admin (se for)
+    // Carrinho com badge
     const iconLinksHTML = `
-      <a class="link-login" href="carrinho.html" title="Carrinho">
+      <a class="link-login position-relative" href="carrinho.html" title="Carrinho">
         <button class="btn p-0 border-0 bg-transparent">
           <i class="bi bi-cart3 fs-4 text-white"></i>
+          <span id="cart-badge" class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger d-none" style="font-size:0.8rem;">
+            0
+          </span>
         </button>
       </a>
       <a class="link-login" href="pedidos.html" title="Meus Pedidos">
@@ -108,6 +110,24 @@ export function loadHeader() {
     const headerContainer = document.createElement('div');
     headerContainer.innerHTML = headerHTML;
     document.body.insertBefore(headerContainer, document.body.firstChild);
+
+    // Atualiza badge do carrinho
+    function atualizarBadgeCarrinho() {
+      const badge = document.getElementById('cart-badge');
+      if (!badge) return;
+      let cart = JSON.parse(localStorage.getItem('cart')) || [];
+      const total = cart.reduce((sum, item) => sum + item.quantity, 0);
+
+      if (total > 0) {
+        badge.textContent = total;
+        badge.classList.remove('d-none');
+      } else {
+        badge.classList.add('d-none');
+      }
+    }
+
+    atualizarBadgeCarrinho();
+    document.addEventListener('cartUpdated', atualizarBadgeCarrinho);
 
     if (user) {
       document.getElementById('btn-logout')?.addEventListener('click', () => {

@@ -42,7 +42,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     tableDescription.textContent = book.description || 'Nenhuma descrição disponível.';
 
     const comprarBtn = document.querySelector('.comprar-btn');
-    
+
     comprarBtn.addEventListener('click', () => {
         verificarAutenticacao(async (user) => {
             let cart = JSON.parse(localStorage.getItem('cart')) || [];
@@ -61,8 +61,8 @@ document.addEventListener('DOMContentLoaded', async () => {
             }
 
             localStorage.setItem('cart', JSON.stringify(cart));
+            document.dispatchEvent(new Event('cartUpdated'));
 
-            // Salva o carrinho no Firebase
             await set(ref(db, 'carrinhos/' + user.uid), cart);
 
             const mensagem = document.getElementById('mensagem-sucesso');
