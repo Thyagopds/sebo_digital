@@ -18,9 +18,9 @@ async function carregarLivrosFirebase() {
     const livro = livrosData[key];
     return {
       id: key,
-      title: livro.title || 'Título Desconhecido',
-      author: livro.author || 'Autor Desconhecido',
-      genre: livro.genre || 'Gênero Não Informado',
+      title: livro.title || 'Desconhecido',
+      author: livro.author || 'Desconhecido',
+      genre: livro.genre || 'Não Informado',
       price: typeof livro.price === 'number' ? livro.price : parseFloat(livro.price) || null,
       condition: livro.condition || 'Não informado',
       description: livro.description || '',
@@ -54,17 +54,29 @@ document.addEventListener('DOMContentLoaded', async () => {
 
   let bookIdToDelete = null;
   let booksCache = [];
+  let searchTerm = '';
 
   async function renderBooks() {
     booksCache = await carregarLivrosFirebase();
     tableBody.innerHTML = '';
 
-    if (booksCache.length === 0) {
+    // Filtragem por busca
+    const filteredBooks = booksCache.filter(book => {
+      if (!searchTerm) return true;
+      const term = searchTerm.toLowerCase();
+      return (
+        (book.title && book.title.toLowerCase().includes(term)) ||
+        (book.author && book.author.toLowerCase().includes(term)) ||
+        (book.genre && book.genre.toLowerCase().includes(term))
+      );
+    });
+
+    if (filteredBooks.length === 0) {
       tableBody.innerHTML = '<tr><td colspan="7" class="text-center">Nenhum livro cadastrado.</td></tr>';
       return;
     }
 
-    booksCache.forEach(book => {
+    filteredBooks.forEach(book => {
       const priceToDisplay = typeof book.price === 'number' ? `R$ ${book.price.toFixed(2)}` : 'R$ Grátis';
       const tr = document.createElement('tr');
       tr.innerHTML = `
@@ -144,9 +156,11 @@ document.addEventListener('DOMContentLoaded', async () => {
     editForm['edit-index'].value = book.id;
     editForm['edit-titulo'].value = book.title;
     editForm['edit-autor'].value = book.author;
-    editForm['edit-genero'].value = book.genre;
+    // Seleciona o valor correto no select de gênero
+    editForm['edit-genero'].value = book.genre || '';
     editForm['edit-preco'].value = book.price;
-    editForm['edit-condicao'].value = book.condition;
+    // Seleciona o valor correto no select de condição
+    editForm['edit-condicao'].value = book.condition || '';
     editForm['edit-descricao'].value = book.description;
     previewImagem.src = book.image;
     imageInput.value = '';
@@ -217,6 +231,13 @@ document.addEventListener('DOMContentLoaded', async () => {
     } else {
       previewAddImagem.src = 'img/placeholder.jpg';
     }
+  });
+
+  // Adiciona evento de busca ao digitar
+  const searchInput = document.getElementById('searchInput');
+  searchInput.addEventListener('input', () => {
+    searchTerm = searchInput.value.trim();
+    renderBooks();
   });
 
   renderBooks();

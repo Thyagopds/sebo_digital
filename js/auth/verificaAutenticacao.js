@@ -12,6 +12,7 @@ export function verificarAutenticacao(callback) {
       callback(user); // prossegue com lógica se autenticado
     } else {
       window.location.href = 'login.html';
+      
     }
   });
 }

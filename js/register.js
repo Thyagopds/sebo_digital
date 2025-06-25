@@ -48,3 +48,6 @@ function toggleSenha(idInput, btn) {
     icon.classList.add("bi-eye");
   }
 }
+
+// Torna a função global para uso no onclick do HTML
+window.toggleSenha = toggleSenha;

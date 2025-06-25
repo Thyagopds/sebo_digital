@@ -1,3 +1,9 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+
+}
 body {
   background: #f8f5f1;
   min-height: 100vh;
@@ -6,10 +12,74 @@ body {
   font-family: 'Segoe UI', Arial, sans-serif;
   color: #4c3928;
 }
+.nav-tabs {
+  border-bottom: 2px solid #ccc;
+}
+
+.nav-tabs .nav-link {
+  color: #555;
+  font-weight: 500;
+  padding: 0.75rem 1.25rem;
+  border: none;
+  border-bottom: 2px solid transparent;
+  transition: all 0.3s ease;
+}
+
+.nav-tabs .nav-link:hover {
+  color: #333;
+  border-color: #aaa;
+}
+
+.nav-tabs .nav-link.active {
+  color: #000;
+  border-color: #4c3928; /* Cor do tema Sebo Digital */
+  font-weight: 600;
+  background-color: transparent;
+}
+
+/* Cartões de doação */
+.card {
+  border-radius: 0.5rem;
+  transition: box-shadow 0.2s ease;
+}
+
+.card:hover {
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
+}
+
+.card-img-top {
+  border-radius: 0.5rem;
+}
+
+/* Botões Aprovar/Reprovar */
+.btn-aprovar {
+  background-color: #28a745;
+  border-color: #28a745;
+  color: white;
+}
+
+.btn-reprovar {
+  background-color: #dc3545;
+  border-color: #dc3545;
+  color: white;
+}
+
+.btn-aprovar:hover {
+  background-color: #218838;
+  border-color: #1e7e34;
+}
+
+.btn-reprovar:hover {
+  background-color: #c82333;
+  border-color: #bd2130;
+}
 
 main {
+  margin-top: 5rem !important;
   flex: 1 0 auto;
 }
+
+
 
 h2 {
   color: #4c3928;
@@ -29,6 +99,7 @@ footer {
   justify-content: space-between;
   align-items: center;
   flex-shrink: 0;
+  margin-bottom: 0 !important;
 }
 
 footer p {

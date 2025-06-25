@@ -36,6 +36,13 @@ document.addEventListener('DOMContentLoaded', () => {
                 throw new Error("Sua conta não tem um perfil definido. Entre em contato com o suporte.");
             }
 
+            // Redireciona para a página de doação se veio de lá
+            const params = new URLSearchParams(window.location.search);
+            if (params.get('redirect') === 'doacoes') {
+                window.location.href = 'doacoes.html';
+                return;
+            }
+
             if (dados.role === 'admin') {
                 window.location.href = 'index_admin.html';
             } else {
@@ -89,3 +96,6 @@ function toggleSenha(idInput, btn) {
         icon.classList.add("bi-eye");
     }
 }
+
+// Torna a função global para uso no onclick do HTML
+window.toggleSenha = toggleSenha;
