@@ -19,7 +19,7 @@ async function carregarDoacoesPorStatus(status) {
     doacoesList.innerHTML = '';
     const snapshot = await get(ref(db, 'doacoes'));
     if (!snapshot.exists()) {
-        doacoesList.innerHTML = `<tr><td colspan="10" class="text-center">Nenhuma doação neste status.</td></tr>`;
+        doacoesList.innerHTML = `<tr><td colspan="9" class="text-center">Nenhuma doação neste status.</td></tr>`;
         return;
     }
     const doacoes = snapshot.val();
@@ -33,7 +33,7 @@ async function carregarDoacoesPorStatus(status) {
         });
 
     if (filtradas.length === 0) {
-        doacoesList.innerHTML = `<tr><td colspan="10" class="text-center">Nenhuma doação neste status.</td></tr>`;
+        doacoesList.innerHTML = `<tr><td colspan="9" class="text-center">Nenhuma doação neste status.</td></tr>`;
         return;
     }
 
@@ -48,7 +48,6 @@ async function carregarDoacoesPorStatus(status) {
             <td>${d.genre || ''}</td>
             <td>${d.price !== undefined && d.price !== null && d.price !== '' ? `R$ ${Number(d.price).toFixed(2)}` : '-'}</td>
             <td>${d.condition || ''}</td>
-            <td style="max-width:200px;white-space:pre-line;word-break:break-word;">${d.description || ''}</td>
             <td>${d.userEmail ? d.userEmail : (d.userId ? d.userId : 'Não informado')}</td>
             <td>${d.status}</td>
             <td>

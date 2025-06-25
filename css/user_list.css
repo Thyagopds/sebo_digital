@@ -9,7 +9,9 @@
   width: 100%;
   margin-top: 40px;
 }
-
+.breadcrumb a{
+  color: #4c3928;
+}
 .user-table thead,
 .livro-table thead {
   background-color: #4c3928;

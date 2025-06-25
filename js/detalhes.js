@@ -34,7 +34,8 @@ document.addEventListener('DOMContentLoaded', async () => {
     bookImage.alt = book.title;
     bookTitle.textContent = book.title;
     bookDescription.textContent = book.description || 'Nenhuma descrição disponível.';
-    bookPrice.textContent = `R$ ${book.price}`;
+    // Formata o preço com vírgula e duas casas decimais
+    bookPrice.textContent = `R$ ${Number(book.price).toFixed(2).replace('.', ',')}`;
     tableTitle.textContent = book.title;
     tableAuthor.textContent = book.author;
     tableGenre.textContent = book.genre.charAt(0).toUpperCase() + book.genre.slice(1);
