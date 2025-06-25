@@ -59,10 +59,10 @@ async function carregarDoacoesPendentes() {
                 titulo: doacao.titulo,
                 autor: doacao.autor,
                 condicao: doacao.condicao,
-                observacoes: doacao.observacoes, // Garanta que 'observacoes' seja o campo desejado para a descrição do livro no catálogo.
+                observacoes: doacao.observacoes, 
                 imagem: doacao.imagem,
                 origem: 'doacao',
-                data: new Date().toISOString()
+                data: new Date().toISOString(),
             });
 
             renderMensagem('Doação aprovada e livro adicionado ao catálogo!', 'success');
