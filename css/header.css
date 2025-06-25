@@ -93,3 +93,16 @@
 .navbar-toggler-icon {
   filter: invert(1);
 }
+
+.badge-cart-position {
+    top: 0;
+    right: 0;
+}
+
+.bi {
+    vertical-align: -0.125em;
+}
+
+#cart-badge {
+    padding: 0.25em 0.5em;
+}

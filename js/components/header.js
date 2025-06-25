@@ -42,13 +42,11 @@ export function loadHeader() {
         </a>
       `;
 
-    // Carrinho com badge
     const iconLinksHTML = `
       <a class="link-login position-relative" href="carrinho.html" title="Carrinho">
         <button class="btn p-0 border-0 bg-transparent">
           <i class="bi bi-cart3 fs-4 text-white"></i>
-          <span id="cart-badge" 
-           style="font-size:0.8rem; left:60%; top:10%; transform:translate(-50%, 0);">
+          <span id="cart-badge" class="badge bg-danger rounded-pill position-absolute translate-middle badge-cart-position" style="font-size:0.7rem;"> 
             0
           </span>
         </button>
@@ -112,7 +110,6 @@ export function loadHeader() {
     headerContainer.innerHTML = headerHTML;
     document.body.insertBefore(headerContainer, document.body.firstChild);
 
-    // Atualiza badge do carrinho
     function atualizarBadgeCarrinho() {
       const badge = document.getElementById('cart-badge');
       if (!badge) return;
