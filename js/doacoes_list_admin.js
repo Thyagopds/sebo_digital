@@ -1,5 +1,5 @@
 import { db } from './firebaseConfig.js';
-import { ref, get, update } from 'https://www.gstatic.com/firebasejs/9.0.0/firebase-database.js';
+import { ref, get, update, push } from 'https://www.gstatic.com/firebasejs/9.0.0/firebase-database.js';
 
 const doacoesList = document.getElementById('doacoes-list');
 const mensagem = document.getElementById('mensagem');
@@ -47,8 +47,25 @@ async function carregarDoacoesPendentes() {
   // Eventos dos botões
   doacoesList.querySelectorAll('.btn-aprovar').forEach(btn => {
     btn.addEventListener('click', async () => {
+      // Atualiza status da doação
       await update(ref(db, `doacoes/${btn.dataset.id}`), { status: 'aprovada' });
-      renderMensagem('Doação aprovada!', 'success');
+
+      // Busca dados da doação aprovada
+      const doacaoSnapshot = await get(ref(db, `doacoes/${btn.dataset.id}`));
+      const doacao = doacaoSnapshot.val();
+
+      // Adiciona ao catálogo de livros
+      await push(ref(db, 'livros'), {
+        titulo: doacao.titulo,
+        autor: doacao.autor,
+        condicao: doacao.condicao,
+        observacoes: doacao.observacoes,
+        imagem: doacao.imagem,
+        origem: 'doacao',
+        data: new Date().toISOString()
+      });
+
+      renderMensagem('Doação aprovada e livro adicionado ao catálogo!', 'success');
       carregarDoacoesPendentes();
     });
   });
